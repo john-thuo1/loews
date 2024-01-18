@@ -19,5 +19,7 @@ from coreapp.views import *
 
 urlpatterns = [
     path("",home,name="home"),
-    path("mitigating-controls/", control_mitigation, name="mitigation")
+    path("mitigating-controls/", control_mitigation, name="mitigation"),
+    path("self-reporting/", SelfReportCreateView.as_view(), name="report"),
+    
 ]

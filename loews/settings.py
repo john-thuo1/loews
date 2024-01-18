@@ -29,13 +29,18 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "coreapp.apps.CoreappConfig",
     "django_extensions",
-    "crispy_forms",
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "import_export",
+    
+
 ]
 
 MIDDLEWARE = [
@@ -119,7 +124,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
