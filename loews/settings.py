@@ -27,6 +27,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "PIL",
     "coreapp.apps.CoreappConfig",
     "django_extensions",
     "jazzmin",

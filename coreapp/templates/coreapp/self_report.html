@@ -3,13 +3,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <h2 class="text-center">{{ table_title }}</h2>
+
+
+        <!-- Disclaimer Section -->
+    <div class="mt-4 alert alert-info">
+        <i class="fas fa-exclamation-circle"></i>
+
+        <strong>Disclaimer:</strong> The personal information collected will only be used as a means to contact the person reporting the case for more information.
+    </div>
+
     <div class="content-section">
-        <form method="post">
+        <form method="post", enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
             <div class="form-group mt-2">
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>
+        
+
     </div>
 {% endblock content %}
+

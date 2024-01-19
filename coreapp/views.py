@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView
 from coreapp.models import Report
 from coreapp.forms import ReportForm
-from import_export.admin import ImportExportMixin
 
 
 def home(request): 
@@ -25,5 +24,5 @@ class SelfReportCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['table_title'] = 'Add New Report'
+        context['table_title'] = 'Submit A Report on Locust Sightings'
         return context
