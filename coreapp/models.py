@@ -75,12 +75,8 @@ class Report(models.Model):
     species = models.CharField(help_text="Enter the Locust Species", choices=TYPE_SPECIES, max_length=50)
     stage = models.CharField(help_text="Enter the Locust Stage", choices=LOCUST_STAGE, max_length=50)
 
-    size = models.CharField(help_text="Land Size Infested/Breeding Ground", choices=list(LAND_SIZE.items()) + [("Custom Size", "Custom Size")], max_length=20)
-    custom_land_size = models.TextField(
-        blank=True,
-        null=True,
-        help_text="Enter custom land size if 'Custom Size' is selected",
-    )
+    size = models.CharField(help_text="Land Size Infested/Breeding Ground", choices=LAND_SIZE, max_length=20)
+
     
     distribution = models.CharField(help_text="Locust Distribution", choices=LOCUST_DISTRIBUTION, max_length=20)
 
@@ -96,9 +92,3 @@ class Report(models.Model):
     vegetation_details = models.CharField(help_text="Vegetation types in the context of locusts (Cultivated and Agricultural areas).", choices=VEGETATION_COVER, max_length=255)
     gps_coordinates = models.CharField(help_text="Longitude, latitude e.g (-34.6, 26.1)", max_length=30, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-            if self.land_size not in self.LAND_SIZE:
-                
-                # Clear custom_land_size if a predefined choice is not selected
-                self.custom_land_size = None
-            super().save(*args, **kwargs)
