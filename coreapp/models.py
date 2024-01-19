@@ -91,9 +91,9 @@ class Report(models.Model):
     )
 
     location = models.CharField(help_text="Location of the Locust Infestation/Breeding Grounds(Name, District, County)", max_length=255)
-    season = models.CharField(help_text="Location Season", choices=LOCATION_SEASON)
-    soil_type = models.CharField(help_text="Enter the Soil Type in the Affected Field especially for Breeding Grounds",choices=SOIL)
-    vegetation_details = models.CharField(help_text="Vegetation types in the context of locusts (Cultivated and Agricultural areas).", choices=VEGETATION_COVER)
+    season = models.CharField(help_text="Location Season", choices=LOCATION_SEASON, max_length=255)
+    soil_type = models.CharField(help_text="Enter the Soil Type in the Affected Field especially for Breeding Grounds",choices=SOIL, max_length=255)
+    vegetation_details = models.CharField(help_text="Vegetation types in the context of locusts (Cultivated and Agricultural areas).", choices=VEGETATION_COVER, max_length=255)
     gps_coordinates = models.CharField(help_text="Longitude, latitude e.g (-34.6, 26.1)", max_length=30, blank=True, null=True)
 
     def save(self, *args, **kwargs):
