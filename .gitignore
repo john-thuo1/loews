@@ -3,3 +3,5 @@ loews/__pycache__
 coreapp/migrations
 db.sqlite3
 media
+.env
+

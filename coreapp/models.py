@@ -16,9 +16,9 @@ class Report(models.Model):
 
     LOCUST_STAGE = {
         "Adults": "Adults",
-        "Hoppers/Nymph": "Hoppers/Nymph",
-        "Fledglings": "Fledglings",
-        "Eggs":"Eggs",
+        "Hoppers/Nymph(Breeding Ground)": "Hoppers/Nymph(Breeding Ground)",
+        "Fledglings(Young Adults)": "Fledglings(Young Adults)",
+        "Eggs(Breeding Ground)":"Eggs(Breeding Ground)",
         "Unknown": "Unknown",
     }
 
@@ -39,21 +39,49 @@ class Report(models.Model):
         "Entire Area": "Entire Area",
         "Unknown": "Unknown",
     }
+    
+    LOCATION_SEASON = {
+        "Wet Season/Long Rains(April-June)" : "Rainy/Wet Season(April-June)",
+        "Short Rains/Wet Season(April-June)" : "Rainy/Wet Season(April-June)",
 
-    VEGETATION_COVER = {
-        "Dry": "Dry",
-        "Green": "Green",
-        "Sandy":"Sandy",
+        "Dry/Hot Season(January-March)" : "Dry Season(January-March)",
+        "Dry/Cold Season(July-August)": "Dry/Cold Season(July-August)",
+        "Dry/Warm Season(September-October)" : "Dry/Warm Season(September-October)",
+        "Wet Season/Short Rains(November-December)": "Wet Season/Short Rains(November-December)",
+    }
+    
+    SOIL = {
+        "Loose Sandy Soil" : "Loose Sandy Soil",
+        "Clay Soil" : "Clay Soil",
+        "Loam Soil" : "Loam Soil",
+        "Alluvial Soil":"Alluvial Soil",
+        "Laterite Soil":"Laterite Soil",
+        "Peat Soil":"Peat Soil",
         "Unknown" : "Unknown",
+    }
+    
+    VEGETATION_COVER = {
+        "Staple Crops":"Crops",
+        "Pasture and Grasslands":"Pasture and Grasslands",
+        "Vegetable Crops":"Vegetable Crops",
+        "Fruit Orchards":"Fruit Orchards",
+        "Unknown": "Unknown",
     }
 
     name = models.CharField(max_length=100)
     phone_number = models.CharField(help_text="Include Country Code e.g +254710100000", max_length=13)
-    report_date = models.DateField()
+    
+    report_date = models.DateField(help_text="Choose Date when Infestation/Breeding was noticed from the Calender")
     species = models.CharField(help_text="Enter the Locust Species", choices=TYPE_SPECIES, max_length=50)
     stage = models.CharField(help_text="Enter the Locust Stage", choices=LOCUST_STAGE, max_length=50)
 
-    size = models.CharField(help_text="Land Size Infested/Breeding Ground", choices=LAND_SIZE, max_length=20)
+    size = models.CharField(help_text="Land Size Infested/Breeding Ground", choices=list(LAND_SIZE.items()) + [("Custom Size", "Custom Size")], max_length=20)
+    custom_land_size = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Enter custom land size if 'Custom Size' is selected",
+    )
+    
     distribution = models.CharField(help_text="Locust Distribution", choices=LOCUST_DISTRIBUTION, max_length=20)
 
     image = models.ImageField(
@@ -63,5 +91,14 @@ class Report(models.Model):
     )
 
     location = models.CharField(help_text="Location of the Locust Infestation/Breeding Grounds(Name, District, County)", max_length=255)
-    vegetation_details = models.CharField(help_text="Type of Vegetation Infested", choices=VEGETATION_COVER, max_length=20)
+    season = models.CharField(help_text="Location Season", choices=LOCATION_SEASON)
+    soil_type = models.CharField(help_text="Enter the Soil Type in the Affected Field especially for Breeding Grounds",choices=SOIL)
+    vegetation_details = models.CharField(help_text="Vegetation types in the context of locusts (Cultivated and Agricultural areas).", choices=VEGETATION_COVER)
     gps_coordinates = models.CharField(help_text="Longitude, latitude e.g (-34.6, 26.1)", max_length=30, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+            if self.land_size not in self.LAND_SIZE:
+                
+                # Clear custom_land_size if a predefined choice is not selected
+                self.custom_land_size = None
+            super().save(*args, **kwargs)
