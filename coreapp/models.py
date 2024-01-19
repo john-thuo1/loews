@@ -61,12 +61,13 @@ class Report(models.Model):
     }
     
     VEGETATION_COVER = {
-        "Staple Crops":"Crops",
+        "Staple Crops":" Staple Crops",
         "Pasture and Grasslands":"Pasture and Grasslands",
         "Vegetable Crops":"Vegetable Crops",
         "Fruit Orchards":"Fruit Orchards",
         "Unknown": "Unknown",
     }
+    
 
     name = models.CharField(max_length=100)
     phone_number = models.CharField(help_text="Include Country Code e.g +254710100000", max_length=13)
