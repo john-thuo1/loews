@@ -21,5 +21,5 @@ urlpatterns = [
     path("",home,name="home"),
     path("mitigating-controls/", control_mitigation, name="mitigation"),
     path("self-reporting/", SelfReportCreateView.as_view(), name="report"),
-    
+    path("dashboard/", dashboard, name="dashboard"),
 ]
