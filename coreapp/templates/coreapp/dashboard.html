@@ -17,18 +17,15 @@
     <div class="col-12 mb-4">
       <div class="card bg-yellow-alt shadow-sm">
         <div class="card-header d-flex flex-row align-items-center flex-0">
-          <div class="d-block">
-            <div class="h5 font-weight-normal mb-2">Sales Value</div>
-
-          </div>
-
+          <!-- Additional header content if needed -->
         </div>
-        <div class="card-body p-2">
-           
-          <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
+        <div class="card-body pl-5 pr-2 pt-2 pb-2">
+          <!-- Adjusted padding classes -->
+          {{ trends_html|safe }}
         </div>
       </div>
     </div>
+    
 
 
 

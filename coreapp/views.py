@@ -7,6 +7,8 @@ from coreapp.graph_utils import plot_trend
 import pandas as pd
 
 
+
+
 def home(request): 
     return render(request, 'coreapp/base.html')    
 
@@ -17,10 +19,13 @@ def self_report(request):
     return render(request, "coreapp/self_report.html")
 
 def dashboard(request):
-
-    # trends_graph = plot_trend()
     
-    return render(request, "coreapp/dashboard.html")
+    trends_html = plot_trend()
+
+    context = {'trends_html': trends_html}
+    
+    return render(request, "coreapp/dashboard.html", context)
+
 
 class SelfReportCreateView(CreateView):
     model = Report
