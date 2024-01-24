@@ -27,17 +27,26 @@ def plot_trend():
 def plot_species():
     df = pd.read_csv('..\loews\Datasets\data.csv')
 
-    fig2 = go.Figure()
+  # Create a Bar chart
+    bar_fig = go.Figure()
 
     species_counts = df['Species'].value_counts()
-    fig2.add_trace(go.Pie(labels=species_counts.index, values=species_counts.values, hole=0.3, pull=[0.1, 0, 0, 0, 0], textinfo="percent+label"))
+    bar_fig.add_trace(go.Bar(x=species_counts.index, y=species_counts.values, marker_color='cornflowerblue'))
+    bar_fig.update_layout(title='Distribution of Locust Species - Bar Chart', title_x=0.5, showlegend=False)
 
-    # Layout customization
-    fig2.update_layout(title='Distribution of Locust Species')
+    # Create a Table
+    table_fig = go.Figure()
 
+    table_fig.add_trace(go.Table(
+        header=dict(values=['Species', 'Count']),
+        cells=dict(values=[species_counts.index, species_counts.values])
+    ))
+    table_fig.update_layout(title='Distribution of Locust Species - Table', title_x=0.5)
 
-    
-    distribution_html = plot(fig2, output_type='div')
+    # Layout customization for the table
+    table_fig.update_layout(height=300, width=400)  # Adjust height and width as needed
 
-    # Show the plot
+    distribution_html = table_fig.to_html(full_html=False)
+
+    # Show the table
     return distribution_html
