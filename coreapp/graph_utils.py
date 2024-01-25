@@ -24,29 +24,54 @@ def plot_trend():
     return trends_html
 
 
-def plot_species():
+def plot_regions():
     df = pd.read_csv('..\loews\Datasets\data.csv')
 
-  # Create a Bar chart
-    bar_fig = go.Figure()
+    df['Stage'] = df['Stage'].astype(str)
 
-    species_counts = df['Species'].value_counts()
-    bar_fig.add_trace(go.Bar(x=species_counts.index, y=species_counts.values, marker_color='cornflowerblue'))
-    bar_fig.update_layout(title='Distribution of Locust Species - Bar Chart', title_x=0.5, showlegend=False)
+    df['Category'] = pd.NA
+    df.loc[df['Stage'].isin(['Hoppers/Nymph(Breeding Ground)', 'Eggs(Breeding Ground)']), 'Category'] = 'Breeding Ground'
+    df.loc[df['Stage'].isin(['Fledglings(Young Adults)', 'Adults']), 'Category'] = 'Infestation'
+    df.loc[df['Stage'] == 'Unknown', 'Category'] = 'Unconfirmed'
 
-    # Create a Table
-    table_fig = go.Figure()
+    grouped_df = df.groupby(['Location', 'Category']).size().reset_index(name='Count')
 
-    table_fig.add_trace(go.Table(
-        header=dict(values=['Species', 'Count']),
-        cells=dict(values=[species_counts.index, species_counts.values])
-    ))
-    table_fig.update_layout(title='Distribution of Locust Species - Table', title_x=0.5)
+    pivot_df = grouped_df.pivot(index='Location', columns='Category', values='Count').reset_index()
 
-    # Layout customization for the table
-    table_fig.update_layout(height=300, width=400)  # Adjust height and width as needed
+    sorted_df = pivot_df.sort_values(by='Infestation', ascending=False).head(20)
 
-    distribution_html = table_fig.to_html(full_html=False)
+  # Create a scrollable and hoverable Bootstrap table
+    table_html = """
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Region</th>
+                    <th scope="col">Infestation</th>
+                    <th scope="col">Breeding Ground</th>
+                    <th scope="col">Unconfirmed</th>
+                </tr>
+            </thead>
+            <tbody>
+    """
 
-    # Show the table
-    return distribution_html
+    for _, row in sorted_df.iterrows():
+        table_html += f"""
+            <tr>
+                <td>{row['Location']}</td>
+                <td>{row['Infestation']}</td>
+                <td>{row['Breeding Ground']}</td>
+                <td>{row['Unconfirmed']}</td>
+            </tr>
+        """
+
+    table_html += """
+            </tbody>
+        </table>
+    </div>
+    """
+
+    return table_html
+
+
+

@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView
 from coreapp.models import Report
 from coreapp.forms import ReportForm
-from coreapp.graph_utils import plot_trend, plot_species
+from coreapp.graph_utils import plot_trend, plot_regions
 import pandas as pd
 
 
@@ -21,9 +21,9 @@ def self_report(request):
 def dashboard(request):
     
     trends_html = plot_trend()
-    distribution_html = plot_species()
+    table_html = plot_regions()
 
-    context = {'trends_html': trends_html, 'distribution_html': distribution_html}
+    context = {'trends_html': trends_html, 'table_html': table_html, }
     
     return render(request, "coreapp/dashboard.html", context)
 
