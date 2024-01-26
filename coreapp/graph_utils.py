@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
+from tqdm import tqdm
 
 
 def plot_trend():
@@ -38,14 +39,16 @@ def plot_regions():
 
     pivot_df = grouped_df.pivot(index='Location', columns='Category', values='Count').reset_index()
 
-    sorted_df = pivot_df.sort_values(by='Infestation', ascending=False).head(20)
+    sorted_df = pivot_df.sort_values(by='Infestation', ascending=False).head(100)
 
-  # Create a scrollable and hoverable Bootstrap table
+  # Table
+
     table_html = """
     <div class="table-responsive">
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
+                    <th scope="col">Index(Descending Order)</th>
                     <th scope="col">Region</th>
                     <th scope="col">Infestation</th>
                     <th scope="col">Breeding Ground</th>
@@ -55,9 +58,10 @@ def plot_regions():
             <tbody>
     """
 
-    for _, row in sorted_df.iterrows():
+    for idx, (_, row) in tqdm(enumerate(sorted_df.iterrows(), start=1), total=len(sorted_df)):
         table_html += f"""
             <tr>
+                <td>{idx}</td>
                 <td>{row['Location']}</td>
                 <td>{row['Infestation']}</td>
                 <td>{row['Breeding Ground']}</td>
@@ -70,6 +74,7 @@ def plot_regions():
         </table>
     </div>
     """
+
 
     return table_html
 
