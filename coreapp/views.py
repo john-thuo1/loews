@@ -14,13 +14,11 @@ import os
 
 def home(request): 
     trends_html = plot_trend()
-    table_html = plot_regions()
 
-    context = {'trends_html': trends_html, 'table_html': table_html, }
+    context = {'trends_html': trends_html}
     return render(request, "coreapp/index.html", context)   
 
-# def index(request):
-#     return render(request, "coreapp/index.html") 
+
 
 def control_mitigation(request):
     return render(request, "coreapp/mitigation.html")
