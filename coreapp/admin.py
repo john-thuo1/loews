@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Report
+from .models import Report, Chat
 from import_export.admin import ImportExportMixin
 
 
@@ -9,4 +9,5 @@ class ReportAdmin(ImportExportMixin, admin.ModelAdmin):
     
 
 admin.site.register(Report, ReportAdmin)
+admin.site.register(Chat)
 
