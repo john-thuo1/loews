@@ -73,13 +73,12 @@
         <div class="input-group-append mt-2  me-2">
             <button type="submit" class="btn btn-outline-success"><i class="fas fa-paper-plane me-2"></i>Send</button>
         </div>
-        <div class="input-group-append mt-2  me-2">
-            <button type="button" class="btn btn-outline-success"><i class="fas fa-redo me-2"></i>Rerun</button>
-        </div>
-        <div class="input-group-append mt-2  me-2">
-            <button type="button" class="btn btn-outline-success"><i class="fas fa-times-circle me-2"></i>Clear</button>
-
-        </div>
+        <div class="input-group-append mt-2 me-2">
+          <a href="{% url 'delete_chats' %}" class="btn btn-outline-success">
+              <i class="fas fa-times-circle me-2"></i>Delete Chats
+          </a>
+      </div>
+      
     </div>
 </form>
 

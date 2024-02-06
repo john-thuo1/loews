@@ -80,13 +80,11 @@ def format_response(response):
     formatted_lines = []
 
     for line in lines:
-        # Remove empty lines
         if line.strip():
             # Check if the line starts with a number or bullet point
             is_numbered = re.match(r'^\s*\d+\.\s+', line)
             is_bulleted = re.match(r'^\s*-\s+', line)
 
-            # Add appropriate HTML markup
             if is_numbered:
                 formatted_lines.append(f'<p>{line.strip()}</p>')
             elif is_bulleted:
@@ -112,6 +110,13 @@ def rag_chat(request):
     
     return render(request, "coreapp/chat.html", {"chats": chats})
     
+def delete_chats(request):
+    if request.method == "DELETE":
+        Chat.objects.filter(user=request.user).delete()
+        return JsonResponse({"message": "Chats deleted successfully"})
+    else:
+        return JsonResponse({"error": "Invalid method. Use DELETE."})
+        
 
 
 class SelfReportCreateView(CreateView):
