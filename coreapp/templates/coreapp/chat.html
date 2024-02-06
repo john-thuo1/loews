@@ -1,66 +1,7 @@
 {% extends 'coreapp/base.html' %}
+{% load static %}
 
 {% block styles %}
-<style>
-    body, html {
-      height: 100%;
-    }
-
-    .messages-box {
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .messages-list {
-      padding-left: 0;
-    }
-
-    .message {
-      margin-bottom: 15px;
-      list-style: none;
-    }
-
-    .message-text {
-      padding: 10px;
-      border-radius: 5px;
-    }
-
-    .sent {
-      background-color: #dcf8c6;
-      align-self: flex-end;
-    }
-
-    .received {
-      background-color: #f1f0f0;
-      align-self: flex-start;
-    }
-
-    .message-form {
-      display: flex;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 10px;
-      background-color: #f8f9fa;
-    }
-
-    .message-input {
-      flex: 1;
-      border-radius: 0;
-      border-right: none;
-    }
-
-    .btn-send {
-      border-radius: 0;
-    }
-
-    .chat-container {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
 {% endblock %}
 
 
@@ -70,7 +11,7 @@
     {% if user.is_authenticated %}
     <div class="card-header" style="background-color: #262B40; color: white;">
         Welcome, {{ user.username }}
-        <a style="color: yellow;" href="logout">Logout</a>
+        <!-- <a style="color: yellow;" href="logout">Logout</a> -->
     </div>
     
     {% else %}
@@ -106,7 +47,8 @@
               <b>Openai Chatbot</b>
             </div>
             <div class="message-content mt-1">
-              {{chat.response}}
+              {{ chat.response | linebreaks }}
+
             </div>
           </div>
         </li>
@@ -187,13 +129,17 @@
         const response = data.response;
         const messageItem = document.createElement('li');
         messageItem.classList.add('message', 'received');
+        
+        // Format the response as bulleted or numbered list
+        const formattedResponse = formatResponse(response);
+        
         messageItem.innerHTML = `
         <div class="message-text">
             <div class="message-sender">
               <b>AI Chatbot</b>
             </div>
             <div class="message-content">
-                ${response}
+                ${formattedResponse}
             </div>
         </div>
           `;
@@ -201,5 +147,34 @@
       });
   });
 
+  // Function to format response as bulleted or numbered list
+  function formatResponse(response) {
+  const lines = response.split('\n');
+  let formattedLines = [];
+
+  for (const line of lines) {
+    // Remove empty lines
+    if (line.trim() !== '') {
+      // Check if the line starts with a number or bullet point
+      const isNumbered = /^\s*\d+\.\s+/.test(line);
+      const isBulleted = /^\s*-\s+/.test(line);
+
+      // Add appropriate HTML markup
+      if (isNumbered) {
+        formattedLines.push(`<p>${line.trim()}</p>`);
+      } else if (isBulleted) {
+        formattedLines.push(`<p>${line.trim()}</p>`);
+      } else {
+        // Default to numbered list if the format is not detected
+        formattedLines.push(`<p>${line.trim()}</p>`);
+      }
+    }
+  }
+
+  return formattedLines.join('');
+}
+
+  
 </script>
+
 {% endblock %}

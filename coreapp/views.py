@@ -17,6 +17,7 @@ from .models import Chat
 
 from django.utils import timezone
 from decouple import config
+import re
 
 client = OpenAI(
     api_key=config("OPENAI_API_KEY"),
@@ -73,6 +74,30 @@ def query_chat(message):
     answer = response.choices[0].message.content.strip()
     return answer
 
+
+def format_response(response):
+    lines = response.split('\n')
+    formatted_lines = []
+
+    for line in lines:
+        # Remove empty lines
+        if line.strip():
+            # Check if the line starts with a number or bullet point
+            is_numbered = re.match(r'^\s*\d+\.\s+', line)
+            is_bulleted = re.match(r'^\s*-\s+', line)
+
+            # Add appropriate HTML markup
+            if is_numbered:
+                formatted_lines.append(f'<p>{line.strip()}</p>')
+            elif is_bulleted:
+                formatted_lines.append(f'<p>{line.strip()}</p>')
+            else:
+                # Default to numbered list if the format is not detected
+                formatted_lines.append(f'<p>{line.strip()}</p>')
+
+    return ''.join(formatted_lines)
+
+
 def rag_chat(request):
     
     chats = Chat.objects.filter(user=request.user)
@@ -83,7 +108,8 @@ def rag_chat(request):
 
         chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
         chat.save()
-        return JsonResponse({"message": message, "response": response})
+        return JsonResponse({"message": message, "response": format_response(response)})
+    
     return render(request, "coreapp/chat.html", {"chats": chats})
     
 
