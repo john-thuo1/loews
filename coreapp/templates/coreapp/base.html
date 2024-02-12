@@ -43,7 +43,7 @@
               <i class="fas fa-home me-2"></i> Home
           </a>
       </li>
-
+      
       <li>
           <a href="{% url 'rag-chat' %}" class="nav-item nav-link">
               <i class="fas fa-comments me-2"></i> RAG Chat
@@ -67,11 +67,6 @@
             <i class="fas fa-shield-alt me-2"></i> Mitigation strategies
         </a>
     </li>
-      <!-- <li>
-          <a href="#" class="nav-item nav-link">
-              <i class="fas fa-cogs me-2"></i> Components
-          </a>
-      </li> -->
 
       <li>
           <a href="#" class="nav-item nav-link">
@@ -94,53 +89,62 @@
       <div id="content" style="flex: 1; margin-left: 250px;">
 
 
-       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-          <!-- Search bar -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav me-auto">
-              <li class="nav-item" style="margin-left: 330px">
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit" style="margin-left: 3px;">Search</button>
-                </form>
-              </li>
-              
-                <!-- Notification icon -->
-              <li class="nav-item" style="margin-left: 130px;">
-                <a class="nav-link" href="#">
-                  <i class="fas fa-bell fa-lg"></i>
-                </a>
-              </li>
-
-              <!-- Social Media Icons with spacing -->
-              <li class="nav-item" style="margin-left: 20px;">
-                <a class="nav-link" href="#">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-              </li>
-
-              <li class="nav-item" style="margin-left: 20px;">
-                <a class="nav-link" href="#">
-                  <i class="fab fa-twitter"></i>
-                </a>
-              </li>
-
-              <li class="nav-item" style="margin-left: 20px;">
-                <a class="nav-link" href="https://www.linkedin.com/in/john-thuo-427210aa/" target="_blank">
-                  <i class="fab fa-linkedin"></i>
-                </a>
-              </li>
-
-              <li class="nav-item" style="margin-left: 20px;">
-                <a class="nav-link" href="#">
-                  <i class="fas fa-user"></i>
-                </a>
-              </li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <!-- Search bar -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav me-auto">
+                <li class="nav-item" style="margin-left: 330px">
+                  <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" style="margin-left: 3px;">Search</button>
+                  </form>
+                </li>
+        
+                {% if user.is_authenticated %}
+                  <!-- Notification icon -->
+                  <li class="nav-item" style="margin-left: 130px;">
+                    <a class="nav-link" href="#">
+                      <i class="fas fa-bell fa-lg"></i>
+                    </a>
+                  </li>
+        
+                  <!-- Social Media Icons with spacing -->
+                  <li class="nav-item" style="margin-left: 20px;">
+                    <a class="nav-link" href="#">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+        
+                  <li class="nav-item" style="margin-left: 20px;">
+                    <a class="nav-link" href="https://www.linkedin.com/in/john-thuo-427210aa/" target="_blank">
+                      <i class="fab fa-linkedin"></i>
+                    </a>
+                  </li>
+        
+                  <li class="nav-item" style="margin-left: 20px;">
+                    <div class="dropdown">
+                      <a class="nav-link d-flex justify-content-between align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span><i class="fas fa-user"></i></span>
+                        <span><i class="fas fa-caret-down"></i></span>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' %}">View Profile</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                      </div>
+                    </div>
+                  </li>
+                {% else %}
+                  <!-- Register Account -->
+                  <li class="nav-item" style="margin-left: 130px;">
+                    <a class="btn btn-outline-success" href="{% url 'register' %}">Register</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+        
       
       
 
