@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import CreateView, DeleteView, UpdateView, ListView
+from django.views.generic import CreateView
 from coreapp.models import Report
 from coreapp.forms import ReportForm
+
+
 from coreapp.graph_utils import plot_trend, plot_regions
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
@@ -95,8 +97,9 @@ def format_response(response):
 
     return ''.join(formatted_lines)
 
-
 def rag_chat(request):
+    
+        # Ensure that the user is authenticated
     
     chats = Chat.objects.filter(user=request.user)
 

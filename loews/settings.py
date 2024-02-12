@@ -28,7 +28,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "PIL",
     "coreapp.apps.CoreappConfig",
-    "users.apps.UsersConfig",
     "django_extensions",
     "jazzmin",
     "django.contrib.admin",
@@ -123,9 +122,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-LOGIN_REDIRECT_URL = 'rag-chat'
 
-LOGIN_URL = 'login'
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
