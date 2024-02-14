@@ -9,3 +9,4 @@ class ReportForm(forms.ModelForm):
         widgets = {
             'report_date': forms.DateInput(attrs={'type': 'date'}),
         }
+

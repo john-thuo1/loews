@@ -76,12 +76,51 @@
   </ul>
 
   <ul class="list-unstyled CTAs">
-      <li>
-          <a href="#" class="download">Need Support?</a>
-      </li>
+    <li>
+      <a href="#" class="download" data-bs-toggle="modal" data-bs-target="#exampleModal">Need Support?</a>
+  </li>
   </ul>
 </nav>
 
+
+<!-- Contact Section Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header ">
+              <h6 class="modal-title text-center" id="exampleModalLabel" style="margin-left: 170px;"><b>Contact Us</b></h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="https://api.web3forms.com/submit" method="POST" >
+                <input type="hidden" name="access_key" value="e4983e8a-910f-4401-8f7d-46ed8d0cca60">
+
+                  <div data-mdb-input-init class="form-outline mb-4">
+                      <input type="text" name="name" id="form4Example1" class="form-control" required />
+                      <label class="form-label" for="form4Example1">Full Name</label>
+                  </div>
+
+                  <!-- Email input -->
+                  <div data-mdb-input-init class="form-outline mb-4">
+                      <input type="email" name="email" id="form4Example2" class="form-control" required />
+                      <label class="form-label" for="form4Example2">Your Email address</label>
+                  </div>
+
+                  <!-- Message input -->
+                  <div data-mdb-input-init class="form-outline mb-4">
+                      <textarea class="form-control" id="form4Example3" rows="4"></textarea>
+                      <label class="form-label" for="form4Example3">Message</label>
+                  </div>
+
+                
+
+                  <!-- Submit button -->
+                  <button data-mdb-ripple-init type="submit" class="btn btn-outline-success btn-block mb-4">Submit</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------------------------- -->
 

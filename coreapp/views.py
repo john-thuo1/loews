@@ -6,9 +6,9 @@ from coreapp.models import Report
 from coreapp.forms import ReportForm
 
 
+
 from coreapp.graph_utils import plot_trend, plot_regions
 from django.http import FileResponse, Http404
-from django.shortcuts import get_object_or_404
 import os
 from django.http import JsonResponse
 from openai import OpenAI
@@ -121,6 +121,10 @@ def delete_chats(request):
         return JsonResponse({"error": "Invalid method. Use DELETE."})
         
 
+def contact_message(request):
+    return render(request, "coreapp/contact.html")
+
+    
 
 class SelfReportCreateView(CreateView):
     model = Report
