@@ -57,8 +57,7 @@ def plot_regions():
             </thead>
             <tbody>
     """
-
-    for idx, (_, row) in tqdm(enumerate(sorted_df.iterrows(), start=1), total=len(sorted_df)):
+    for idx, (_, row) in enumerate(sorted_df.iterrows(), start=1):
         table_html += f"""
             <tr>
                 <td>{idx}</td>
@@ -75,8 +74,41 @@ def plot_regions():
     </div>
     """
 
-
-    return table_html
-
+    return table_html, df
 
 
+def plot_seasonality():
+    # df = pd.read_csv('..\loews\Datasets\data.csv')
+    _, df = plot_regions()
+
+    infestation_df = df[df['Category'] == 'Infestation']
+    breeding_ground_df = df[df['Category'] == 'Breeding Ground']
+
+    # Group by Season and calculate counts
+    infestation_counts = infestation_df.groupby('Season').size().reset_index(name='Infestation Count')
+    breeding_ground_counts = breeding_ground_df.groupby('Season').size().reset_index(name='Breeding Ground Count')
+
+    fig2 = go.Figure()
+
+    fig2.add_trace(go.Bar(x=infestation_counts['Season'], y=infestation_counts['Infestation Count'],
+                        name='Infestations', marker_color='skyblue', width=0.2)) 
+
+    fig2.add_trace(go.Bar(x=breeding_ground_counts['Season'], y=breeding_ground_counts['Breeding Ground Count'],
+                        name='Breeding Grounds', marker_color='salmon', width=0.2)) 
+
+    fig2.update_layout(title='',
+                    xaxis_title='',
+                    yaxis_title='Count',
+                    barmode='stack',  
+                    legend=dict(x=0.01, y=0.99),
+                    margin=dict(l=0, r=0, t=30, b=0))
+    fig2.update_xaxes(tickvals=[], ticktext=[])
+    fig2.update_yaxes(range=[0, 900]) 
+
+
+    season_html = plot(fig2,  output_type='div')
+
+
+    return season_html
+
+    

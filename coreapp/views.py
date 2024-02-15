@@ -4,11 +4,11 @@ from django.urls import reverse
 from django.views.generic import CreateView
 from coreapp.models import Report
 from coreapp.forms import ReportForm
+from django.http import HttpResponse, Http404
 
+import csv
 
-
-from coreapp.graph_utils import plot_trend, plot_regions
-from django.http import FileResponse, Http404
+from coreapp.graph_utils import plot_trend, plot_regions, plot_seasonality
 import os
 from django.http import JsonResponse
 from openai import OpenAI
@@ -43,24 +43,40 @@ def self_report(request):
 def dashboard(request):
     
     trends_html = plot_trend()
-    table_html = plot_regions()
+    table_html = plot_regions()[0]
+    season_html = plot_seasonality()
 
-    context = {'trends_html': trends_html, 'table_html': table_html, }
+    context = {'trends_html': trends_html, 'table_html': table_html, 'season_html':season_html}
     
     return render(request, "coreapp/dashboard.html", context)
 
 
 
-# Check the File Path
 def download_data(request):
-    file_path = os.path.join(settings.BASE_DIR, "Datasets/data.csv")
+    # Fetch data from the Report model
+    reports_data = Report.objects.all().values()
 
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as file:
-            response = FileResponse(file)
-            return response
-    else:
-        raise Http404("File not found")
+    columns_to_drop = ['name', 'phone_number']
+
+    # Create a CSV response
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="cleaned_data.csv"'
+
+    # Create a CSV writer
+    csv_writer = csv.writer(response)
+
+    # Write the header row excluding specified columns
+    header_row = [field for field in reports_data[0] if field not in columns_to_drop]
+    csv_writer.writerow(header_row)
+
+    # Write the data rows excluding specified columns
+    for report in reports_data:
+        cleaned_report = [report[field] for field in header_row]
+        csv_writer.writerow(cleaned_report)
+
+    return response
+    
+
  
 
 def query_chat(message):
