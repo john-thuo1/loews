@@ -1,10 +1,9 @@
-from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView
 from coreapp.models import Report
 from coreapp.forms import ReportForm
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 
 import csv
 
@@ -13,8 +12,6 @@ import os
 from django.http import JsonResponse
 from openai import OpenAI
 
-from django.contrib import auth
-from django.contrib.auth.models import User
 from .models import Chat
 
 from django.utils import timezone
@@ -140,7 +137,7 @@ def delete_chats(request):
 def contact_message(request):
     return render(request, "coreapp/contact.html")
 
-    
+
 
 class SelfReportCreateView(CreateView):
     model = Report
@@ -155,4 +152,5 @@ class SelfReportCreateView(CreateView):
         context['table_title'] = 'Submit A Report on Locust Sightings'
         return context
     
+
 

@@ -15,8 +15,8 @@ def plot_trend():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=monthly_tally['Report_Date'], y=monthly_tally['Land_Size(Acres)'], mode='lines+markers', marker=dict(size=10),
                              name='Affected Monthly Land Size in Acres For both Infestation and Breeding Grounds'))
-    fig.update_layout(title='Affected Monthly Land Size in Acres For both Infestation and Breeding Grounds',
-                      xaxis_title='Month',
+    fig.update_layout(title='Land Size Affected',
+                      xaxis_title='Month, Year',
                       yaxis_title='Land Size (Acres)',
                       title_x=0.5)
 

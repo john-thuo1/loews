@@ -86,14 +86,20 @@ class Report(models.Model):
     vegetation_details = models.CharField(help_text="Vegetation types in the context of locusts (Cultivated and Agricultural areas).", choices=VEGETATION_COVER, max_length=255)
     gps_coordinates = models.CharField(help_text="Longitude, latitude e.g (-34.6, 26.1)", max_length=30)
     
+    class Meta:
+        verbose_name = "Report" 
+        verbose_name_plural = "Reports"  
 
 class Chat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
     response = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Chat"
+        verbose_name_plural = "Chats"
 
     def __str__(self):
         return f'{self.user.username}: {self.message}'
-
 
