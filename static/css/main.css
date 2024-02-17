@@ -55,7 +55,6 @@ a:focus {
     width: 100%;
     align-items: stretch;
 }
-
 #sidebar {
     min-width: 250px;
     max-width: 250px;
@@ -63,6 +62,7 @@ a:focus {
     color: #fff;
     /* position:fixed; */
     transition: all 0.3s;
+    margin-left: 0; /* Keep the sidebar visible by default */
 }
 
 #sidebar.active {
@@ -91,7 +91,7 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color:#262B40;
+    color: #262B40;
     background: #fff;
 }
 
@@ -142,19 +142,12 @@ a.article:hover {
     /* color: #fff !important; */
     border-color: #262B40;
     box-shadow: 0 0 10px 2px #262B40;
-
 }
 
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
-
-.card:hover{
-    border-color: #262B40;
-    box-shadow: 0 0 10px 2px rgba(#262B40);
-
-}
 .card-title {
     font-size: 16px;
 }
@@ -165,7 +158,6 @@ a.article:hover {
     color: #333;
 }
 
-
 #content {
     width: 100%;
     padding: 20px;
@@ -173,19 +165,11 @@ a.article:hover {
     transition: all 0.3s;
 }
 
-
-
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-#sidebar {
-    margin-left: 0; /* Adjust the initial margin-left value */
-}
 
 @media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
     #sidebar.active {
         margin-left: 0;
     }
