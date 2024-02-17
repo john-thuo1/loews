@@ -139,13 +139,22 @@ a.download {
 a.article,
 a.article:hover {
     background: #262B40 !important;
-    color: #fff !important;
+    /* color: #fff !important; */
+    border-color: #262B40;
+    box-shadow: 0 0 10px 2px #262B40;
+
 }
 
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
+
+.card:hover{
+    border-color: #262B40;
+    box-shadow: 0 0 10px 2px rgba(#262B40);
+
+}
 .card-title {
     font-size: 16px;
 }
@@ -169,6 +178,9 @@ a.article:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
+#sidebar {
+    margin-left: 0; /* Adjust the initial margin-left value */
+}
 
 @media (max-width: 768px) {
     #sidebar {
@@ -178,6 +190,6 @@ a.article:hover {
         margin-left: 0;
     }
     #sidebarCollapse span {
-        display: none;
+        display: inline-block;
     }
 }
