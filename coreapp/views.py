@@ -1,21 +1,24 @@
+# Standard Library Imports
+import csv
+import re
+
+# Third-party Library Imports
+from decouple import config
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.views.generic import CreateView
-from coreapp.models import Report
-from coreapp.forms import ReportForm
-from django.http import HttpResponse
 
-import csv
+# Local Imports
+from .forms import ReportForm
+from .graph_utils import (plot_trend, plot_regions,
+                                 plot_seasonality, plot_vegetation)
+from .models import Report
 
-from coreapp.graph_utils import plot_trend, plot_regions, plot_seasonality, plot_vegetation
-from django.http import JsonResponse
 from openai import OpenAI
-
 from .models import Chat
 
-from django.utils import timezone
-from decouple import config
-import re
 
 client = OpenAI(
     api_key=config("OPENAI_API_KEY"),
@@ -43,21 +46,21 @@ def dashboard(request):
     season_html = plot_seasonality()
     vegetation_html = plot_vegetation()
 
-    context = {'trends_html': trends_html, 'table_html': table_html, 'season_html': season_html, 'vegetation_html': vegetation_html}
+    context = {'trends_html': trends_html, 'table_html': table_html, 
+               'season_html': season_html, 'vegetation_html': vegetation_html}
     
     return render(request, "coreapp/dashboard.html", context)
 
 
 
 def download_data(request):
-    # Fetch data from the Report model
     reports_data = Report.objects.all().values()
 
     columns_to_drop = ['name', 'phone_number']
 
     # Create a CSV response
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="cleaned_data.csv"'
+    response['Content-Disposition'] = 'attachment; filename="locusts_data.csv"'
 
     # Create a CSV writer
     csv_writer = csv.writer(response)

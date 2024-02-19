@@ -1,7 +1,8 @@
+# Standard Library Imports
+
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
-from tqdm import tqdm
 
 
 def plot_trend():
@@ -20,7 +21,6 @@ def plot_trend():
                       yaxis_title='Land Size (Acres)',
                       title_x=0.5)
 
-    # Convert the figure to HTML
     trends_html = plot(fig, output_type='div')
     return trends_html
 
@@ -116,7 +116,6 @@ def plot_vegetation():
 
     count_by_category = df.groupby(['Vegetation_Details', 'Category']).size().unstack(fill_value=0)
 
-    # Create a bar chart
     fig3 = go.Figure()
 
     for category in count_by_category.columns:
