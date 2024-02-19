@@ -7,8 +7,7 @@ from django.http import HttpResponse
 
 import csv
 
-from coreapp.graph_utils import plot_trend, plot_regions, plot_seasonality
-import os
+from coreapp.graph_utils import plot_trend, plot_regions, plot_seasonality, plot_vegetation
 from django.http import JsonResponse
 from openai import OpenAI
 
@@ -42,8 +41,9 @@ def dashboard(request):
     trends_html = plot_trend()
     table_html = plot_regions()[0]
     season_html = plot_seasonality()
+    vegetation_html = plot_vegetation()
 
-    context = {'trends_html': trends_html, 'table_html': table_html, 'season_html':season_html}
+    context = {'trends_html': trends_html, 'table_html': table_html, 'season_html': season_html, 'vegetation_html': vegetation_html}
     
     return render(request, "coreapp/dashboard.html", context)
 

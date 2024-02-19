@@ -39,7 +39,7 @@ def plot_regions():
 
     pivot_df = grouped_df.pivot(index='Location', columns='Category', values='Count').reset_index()
 
-    sorted_df = pivot_df.sort_values(by='Infestation', ascending=False).head(100)
+    sorted_df = pivot_df.sort_values(by='Infestation', ascending=False).head(209)
 
   # Table
 
@@ -78,7 +78,6 @@ def plot_regions():
 
 
 def plot_seasonality():
-    # df = pd.read_csv('..\loews\Datasets\data.csv')
     _, df = plot_regions()
 
     infestation_df = df[df['Category'] == 'Infestation']
@@ -112,3 +111,37 @@ def plot_seasonality():
     return season_html
 
     
+def plot_vegetation():
+    _, df = plot_regions()
+
+    count_by_category = df.groupby(['Vegetation_Details', 'Category']).size().unstack(fill_value=0)
+
+    # Create a bar chart
+    fig3 = go.Figure()
+
+    for category in count_by_category.columns:
+        fig3.add_trace(go.Bar(
+            x=count_by_category.index,
+            y=count_by_category[category],
+            name=f'{category}',
+            width=0.3,
+        ))
+
+    fig3.update_layout(
+        title='',
+        xaxis=dict(title='Vegetation_Details'),
+        yaxis=dict(title='Count'),
+        legend=dict(x=0.01, y=0.99),
+        margin=dict(l=0, r=0, t=30, b=0),
+        bargap=0.1
+    )
+
+    fig3.update_yaxes(range=[0, 550]) 
+    fig3.update_xaxes(tickvals=[], ticktext=[])
+
+    vegetation_html = plot(fig3,  output_type='div')
+    
+    return vegetation_html
+
+
+

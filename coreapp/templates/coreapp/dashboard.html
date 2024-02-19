@@ -1,42 +1,32 @@
-{% extends 'coreapp/base.html' %}
-
-{% block content %}
+{% extends 'coreapp/base.html' %} {% block content %}
 
 <!--Export Data Button-->
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"
+>
   <div class="btn-group">
     <button type="button" class="btn btn-sm btn-outline-primary">
       <a href="{% url 'download_data' %}" download>Download Data</a>
     </button>
+  </div>
 </div>
 
- </div>
-
-
 <!--Row 1-->
-  <div class="row justify-content-md-center">
-
-    <!-- Main Graph- Trend -->
-    <div class="col-12 mb-4">
-      <div class="card bg-yellow-alt shadow-sm">
-        <div class="card-header d-flex flex-row align-items-center flex-0">
-          <!-- Additional header content if needed -->
-        </div>
-        <div class="card-body pl-5 pr-2 pt-2 pb-2">
-          <!-- Adjusted padding classes -->
-          {{ trends_html|safe }}
-
-        </div>
+<div class="row justify-content-md-center">
+  <!-- Main Graph- Trend -->
+  <div class="col-12 mb-4">
+    <div class="card bg-yellow-alt shadow-sm">
+      <div class="card-header d-flex flex-row align-items-center flex-0">
       </div>
-    </div>   
+      <div class="card-body pl-5 pr-2 pt-2 pb-2">
+        {{ trends_html|safe }}
+      </div>
+    </div>
   </div>
-
-
-
+</div>
 
 <!--Row 2 -->
 <div class="row">
-  
   <div class="col-12 col-xl-8 mb-4">
     <div class="row">
       <div class="col-12 mb-4">
@@ -44,10 +34,9 @@
           <div class="card-header">
             <div class="row align-items-center">
               <div class="col">
-               <h5> Distribution of Locust Species</h5>   
-
+                <h5>Distribution of Locust Species</h5>
               </div>
-             </div>
+            </div>
           </div>
           <div class="table-responsive">
             <table class="table align-items-center table-flush table-hover">
@@ -61,439 +50,282 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
+                  <th scope="row" style="font-weight: 200">
                     Spur Throated Locusts
                   </th>
-                  <td>
-                    668
-                  </td>
-                  <td>
-                    13.3%
-                  </td>
+                  <td>668</td>
+                  <td>13.3%</td>
                   <td>
                     <span class="fas fa-arrow-up text-danger mr-3"></span> 1.5%
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
+                  <th scope="row" style="font-weight: 200">
                     Migratory Locust(Locusta Migratoria)
                   </th>
+                  <td>648</td>
+                  <td>13%</td>
                   <td>
-                    648
-                  </td>
-                  <td>
-                    13%
-                  </td>
-                  <td>
-                    <span class="fas fa-arrow-down text-success mr-3"></span> 1.52%
+                    <span class="fas fa-arrow-down text-success mr-3"></span>
+                    1.52%
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
+                  <th scope="row" style="font-weight: 200">
                     Tree Locust(Anacridium sp.)
                   </th>
+                  <td>642</td>
+                  <td>12.8%</td>
                   <td>
-                    642
-                  </td>
-                  <td>
-                    12.8%
-                  </td>
-                  <td>
-                    <span class="fas fa-arrow-down text-success mr-3"></span> 0.5%
+                    <span class="fas fa-arrow-down text-success mr-3"></span>
+                    0.5%
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
+                  <th scope="row" style="font-weight: 200">
                     Bombay Locust(Nomadacris succincta)
                   </th>
-                  <td>
-                    639
-                  </td>
-                  <td>
-                    12.8%
-                  </td>
+                  <td>639</td>
+                  <td>12.8%</td>
                   <td>
                     <span class="fas fa-arrow-up text-danger mr-3"></span> 0.87%
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
-                    Unknown
-                  </th>
+                  <th scope="row" style="font-weight: 200">Unknown</th>
+                  <td>630</td>
+                  <td>12.6%</td>
                   <td>
-                    630
-                  </td>
-                  <td>
-                    12.6%
-                  </td>
-                  <td>
-                    <span class="fas fa-arrow-down text-success mr-3"></span> 1,24%
+                    <span class="fas fa-arrow-down text-success mr-3"></span>
+                    1,24%
                   </td>
                 </tr>
 
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
+                  <th scope="row" style="font-weight: 200">
                     Red Locust(Nomadacris septemfasciata)
                   </th>
+                  <td>606</td>
+                  <td>12.1%</td>
                   <td>
-                    606
-                  </td>
-                  <td>
-                    12.1%
-                  </td>
-                  <td>
-                    <span class="fas fa-arrow-down text-success mr-3"></span> 1.52%
+                    <span class="fas fa-arrow-down text-success mr-3"></span>
+                    1.52%
                   </td>
                 </tr>
 
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
-                    Grasshoppers
-                  </th>
+                  <th scope="row" style="font-weight: 200">Grasshoppers</th>
+                  <td>601</td>
+                  <td>12%</td>
                   <td>
-                    601
-                  </td>
-                  <td>
-                    12%
-                  </td>
-                  <td>
-                    <span class="fas fa-arrow-down text-success mr-3"></span> 1.02%
+                    <span class="fas fa-arrow-down text-success mr-3"></span>
+                    1.02%
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" style="font-weight: 200;">
+                  <th scope="row" style="font-weight: 200">
                     Desert Locusts(Schistocerca gregaria)
                   </th>
+                  <td>571</td>
+                  <td>11.4%</td>
                   <td>
-                    571
-                  </td>
-                  <td>
-                    11.4%
-                  </td>
-                  <td>
-                    <span class="fas fa-arrow-down text-success mr-3"></span> 0.2%
+                    <span class="fas fa-arrow-down text-success mr-3"></span>
+                    0.2%
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-    </div>
+      </div>
 
+      <!--Row 3 -->
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-xl-12 mb-4">
+            <div class="row">
+              <div class="col-12 mb-4">
+                <div class="card border-light shadow-sm">
+                  <div class="card-header">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <h5 class="h5">
+                          Top 10 Regions with High Infestation and Breeding
+                          Incidents
+                        </h5>
+                      </div>
+                      <div class="col text-right">
+                        <a
+                          href="#"
+                          class="btn btn-sm btn-secondary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#graphModal"
+                          >View all</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table
+                      class="table align-items-center table-flush table-hover"
+                    >
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Region(Dsc Or.)</th>
+                          <th scope="col">Infestation</th>
+                          <th scope="col">Breeding Grounds</th>
+                          <th scope="col">Unconfirmed</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Kirinyaga Central District
+                          </th>
+                          <td>19</td>
+                          <td>15</td>
+                          <td>5</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Bungoma East District
+                          </th>
+                          <td>18</td>
+                          <td>8</td>
+                          <td>3</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Imenti North District
+                          </th>
+                          <td>18</td>
+                          <td>7</td>
+                          <td>8</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Laikipia North District
+                          </th>
+                          <td>17</td>
+                          <td>13</td>
+                          <td>4</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Nyahururu District
+                          </th>
+                          <td>17</td>
+                          <td>13</td>
+                          <td>4</td>
+                        </tr>
 
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Marani District
+                          </th>
+                          <td>17</td>
+                          <td>4</td>
+                          <td>3</td>
+                        </tr>
 
-
-<!--Row 3 -->   
-<div class="container">
-<div class="row ">
-  <div class="col-12 col-xl-12 mb-4">
-    <div class="row">
-      <div class="col-12 mb-4">
-        <div class="card border-light shadow-sm">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="col-auto">
-                <h5 class="h5">Top 10 Regions with High Infestation and Breeding Incidents</h5>
-              </div>
-              <div class="col text-right">
-                <a href="#" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#graphModal">View all</a>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Nyeri Central District
+                          </th>
+                          <td>17</td>
+                          <td>14</td>
+                          <td>5</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Wareng District
+                          </th>
+                          <td>16</td>
+                          <td>10</td>
+                          <td>3</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Matungulu District
+                          </th>
+                          <td>16</td>
+                          <td>15</td>
+                          <td>3</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" style="font-weight: 200">
+                            Nzaui District
+                          </th>
+                          <td>16</td>
+                          <td>11</td>
+                          <td>6</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-            <div class="table-responsive ">
-              <table class="table align-items-center table-flush table-hover">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Region(Dsc Or.)</th>
-                    <th scope="col">Infestation</th>
-                    <th scope="col">Breeding Grounds</th>
-                    <th scope="col">Unconfirmed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Kirinyaga Central District
-                    </th>
-                    <td>
-                      19
-                    </td>
-                    <td>
-                      15
-                    </td>
-                    <td>
-                      5
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Bungoma East District
-                    </th>
-                    <td>
-                      18
-                    </td>
-                    <td>
-                      8
-                    </td>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Imenti North District
-                    </th>
-                    <td>
-                      18
-                    </td>
-                    <td>
-                      7
-                    </td>
-                    <td>
-                      8
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Laikipia North District
-                    </th>
-                    <td>
-                      17
-                    </td>
-                    <td>
-                      13
-                    </td>
-                    <td>
-                      4
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Nyahururu District 
-                    </th>
-                    <td>
-                      17
-                    </td>
-                    <td>
-                      13
-                    </td>
-                    <td>
-                      4
-                    </td>
-                  </tr>
-  
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Marani District
-                    </th>
-                    <td>
-                    17
-                    </td>
-                    <td>
-                      4
-                    </td>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-  
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Nyeri Central District
-                    </th>
-                    <td>
-                      17
-                    </td>
-                    <td>
-                      14
-                    </td>
-                    <td>
-                      5
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Wareng District
-                    </th>
-                    <td>
-                      16
-                    </td>
-                    <td>
-                      10
-                    </td>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Matungulu District
-                    </th>
-                    <td>
-                      16
-                    </td>
-                    <td>
-                      15
-                    </td>
-                    <td>
-                      3
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row" style="font-weight: 200;">
-                      Nzaui District
-                    </th>
-                    <td>
-                      16
-                    </td>
-                    <td>
-                      11
-                    </td>
-                    <td>
-                      6
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 
-
-<!-- Modal Structure for Top 10 Regions -->
-<div class="modal fade" id="graphModal" tabindex="-1" aria-labelledby="graphModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body overflow-auto">
-
-        {{ table_html|safe }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <!-- Modal Structure for Top 10 Regions -->
+  <div
+    class="modal fade"
+    id="graphModal"
+    tabindex="-1"
+    aria-labelledby="graphModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body overflow-auto">{{ table_html|safe }}</div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-  
-
-
 
   <div class="col-12 col-xl-4 mb-4">
-    <div class="col-12 mb-4">
-
-      <div class="card border-light shadow-sm">
-        <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-          <div class="d-block">
-            <div class="font-weight-normal  mb-2" style="flex-grow: 1;"><b>Total Number of Infestations</b></div>
-            <h2 class="h3" id="infestationCount">452</h2>
-          </div>
-          <div class="d-block ml-auto">
-            <div class="form-group">
-              <label for="monthDropdown">Select Month(2023)</label>
-              <select class="form-control" id="monthDropdown" onchange="updateInfestationCount()">
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="card-body p-2">
-          <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
-        </div>
-      </div>
-    </div>
-
-
+    <!-- Graph 1 -->
     <div class="col-12 px-0 mb-4">
       <div class="card border-light shadow-sm">
         <div class="card-body">
-          <h5 >Distribution of Locusts Per Season</h5>
+          <h5>Distribution of Locusts Per Season</h5>
 
-            {{ season_html|safe}}
+          {{ season_html|safe}}
         </div>
-        
       </div>
     </div>
 
-
-
-
-
-
-    
+    <!-- Graph 2 -->
     <div class="col-12 px-0 mb-4">
       <div class="card border-light shadow-sm">
         <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-3">
-            <div>
-              <h6 class="mb-0"><span class="icon icon-xs mr-3"><span class="fas fa-globe-europe"></span></span>Global
-                Rank</h6>
-            </div>
-            <div>
-              <a href="#" class="text-primary font-weight-bold">#755<span class="fas fa-chart-line ml-2"></span></a>
-            </div>
-          </div>
-          <div class="d-flex align-items-center justify-content-between border-bottom border-light py-3">
-            <div>
-              <h6 class="mb-0"><span class="icon icon-xs mr-3"><span class="fas fa-flag-usa"></span></span>Country Rank
-              </h6>
-              <div class="small card-stats">Kenya<span class="icon icon-xs text-success ml-2"><span
-                    class="fas fa-angle-up"></span></span></div>
-            </div>
-            <div>
-              <a href="#" class="text-primary font-weight-bold">#32<span class="fas fa-chart-line ml-2"></span></a>
-            </div>
-          </div>
+          <h5>Vegetation Type against Category</h5>
+
+          {{ vegetation_html|safe}}
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
   </div>
 </div>
-<script>
-  function updateInfestationCount() {
-    var selectedMonth = document.getElementById("monthDropdown").value;
-
-    var infestationCountForMonth = getInfestationCountForMonth(selectedMonth);
-
-    document.getElementById("infestationCount").innerText = infestationCountForMonth;
-  }
-
-  function getInfestationCountForMonth(month) {
- 
-    return Math.floor(Math.random() * 1000);
-  }
-
-  updateInfestationCount();
-</script>
 {% endblock content%}
