@@ -129,7 +129,7 @@ def plot_vegetation():
 
     fig3.update_layout(
         title='',
-        xaxis=dict(title='Vegetation_Details'),
+        xaxis=dict(title=''),
         yaxis=dict(title='Count'),
         legend=dict(x=0.01, y=0.99),
         margin=dict(l=0, r=0, t=30, b=0),
