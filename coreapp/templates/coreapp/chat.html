@@ -11,7 +11,6 @@
     {% if user.is_authenticated %}
     <div class="card-header" style="background-color: #262B40; color: white;">
         Welcome, {{ user.username }}
-        <!-- <a style="color: yellow;" href="logout">Logout</a> -->
     </div>
     
     {% else %}
@@ -19,15 +18,12 @@
         <a style="color: yellow;" href="{% url 'login' %}">Login</a>
         <a style="color: yellow;" href="{% url 'register' %}">Register</a>
     </div>
-    
     {% endif %}
+
     <div class="card-body messages-box">
-      
-      <ul class="list-unstyled messages-list">
-        
+      <ul class="list-unstyled messages-list"> 
         {% for chat in chats %}
           {% if chat.user == request.user %}
-
             <li class="message sent">
           <div class="message-text">
             <div class="message-sender">
@@ -72,13 +68,7 @@
         </div>
         <div class="input-group-append mt-2  me-2">
             <button type="submit" class="btn btn-outline-success"><i class="fas fa-paper-plane me-2"></i>Send</button>
-        </div>
-        <div class="input-group-append mt-2 me-2">
-          <a href="{% url 'delete_chats' %}" class="btn btn-outline-success">
-              <i class="fas fa-times-circle me-2"></i>Delete Chats
-          </a>
-      </div>
-      
+        </div>      
     </div>
 </form>
 
@@ -146,7 +136,7 @@
       });
   });
 
-  // Function to format response as bulleted or numbered list
+  // Function to format response as bulleted or numbered list moved
   function formatResponse(response) {
   const lines = response.split('\n');
   let formattedLines = [];
@@ -172,8 +162,6 @@
 
   return formattedLines.join('');
 }
-
-  
 </script>
 
 {% endblock %}

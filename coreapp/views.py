@@ -12,10 +12,8 @@ from django.views.generic import CreateView
 
 # Local Imports
 from .forms import ReportForm
-from .graph_utils import (plot_trend, plot_regions,
-                                 plot_seasonality, plot_vegetation)
+from .graph_utils import (plot_trend, plot_regions, plot_seasonality, plot_vegetation)
 from .models import Report
-
 from openai import OpenAI
 from .models import Chat
 
@@ -32,51 +30,23 @@ def home(request):
     return render(request, "coreapp/index.html", context)   
 
 
-
 def control_mitigation(request):
     return render(request, "coreapp/mitigation.html")
+
 
 def self_report(request):
     return render(request, "coreapp/self_report.html")
 
+
 def dashboard(request):
-    
     trends_html = plot_trend()
     table_html = plot_regions()[0]
     season_html = plot_seasonality()
     vegetation_html = plot_vegetation()
-
     context = {'trends_html': trends_html, 'table_html': table_html, 
                'season_html': season_html, 'vegetation_html': vegetation_html}
     
     return render(request, "coreapp/dashboard.html", context)
-
-
-
-def download_data(request):
-    reports_data = Report.objects.all().values()
-
-    columns_to_drop = ['name', 'phone_number']
-
-    # Create a CSV response
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="locusts_data.csv"'
-
-    # Create a CSV writer
-    csv_writer = csv.writer(response)
-
-    # Write the header row excluding specified columns
-    header_row = [field for field in reports_data[0] if field not in columns_to_drop]
-    csv_writer.writerow(header_row)
-
-    # Write the data rows excluding specified columns
-    for report in reports_data:
-        cleaned_report = [report[field] for field in header_row]
-        csv_writer.writerow(cleaned_report)
-
-    return response
-    
-
  
 
 def query_chat(message):
@@ -84,22 +54,19 @@ def query_chat(message):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a locust outbreak mitigation expert."},
-            {"role": "user", "content": message},
-            
+            {"role": "user", "content": message},       
         ]
     )
-    
     answer = response.choices[0].message.content.strip()
     return answer
 
 
+# Format response prior to saving to db
 def format_response(response):
     lines = response.split('\n')
     formatted_lines = []
-
     for line in lines:
         if line.strip():
-            # Check if the line starts with a number or bullet point
             is_numbered = re.match(r'^\s*\d+\.\s+', line)
             is_bulleted = re.match(r'^\s*-\s+', line)
 
@@ -108,17 +75,12 @@ def format_response(response):
             elif is_bulleted:
                 formatted_lines.append(f'<p>{line.strip()}</p>')
             else:
-                # Default to numbered list if the format is not detected
                 formatted_lines.append(f'<p>{line.strip()}</p>')
-
     return ''.join(formatted_lines)
 
-def rag_chat(request):
-    
-        # Ensure that the user is authenticated
-    
-    chats = Chat.objects.filter(user=request.user)
 
+def rag_chat(request): 
+    chats = Chat.objects.filter(user=request.user)
     if request.method == "POST":
         message = request.POST.get("message")
         response = query_chat(message)
@@ -126,8 +88,25 @@ def rag_chat(request):
         chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
         chat.save()
         return JsonResponse({"message": message, "response": format_response(response)})
-    
     return render(request, "coreapp/chat.html", {"chats": chats})
+
+
+def download_data(request):
+    reports_data = Report.objects.all().values()
+
+    columns_to_drop = ['name', 'phone_number']
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="locusts_data.csv"'
+    csv_writer = csv.writer(response)
+    header_row = [field for field in reports_data[0] if field not in columns_to_drop]
+    csv_writer.writerow(header_row)
+
+    # Write the data rows excluding specified columns
+    for report in reports_data:
+        cleaned_report = [report[field] for field in header_row]
+        csv_writer.writerow(cleaned_report)
+    return response
+
     
 def delete_chats(request):
     if request.method == "DELETE":
@@ -154,6 +133,6 @@ class SelfReportCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['table_title'] = 'Submit A Report on Locust Sightings'
         return context
-    
+
 
 

@@ -1,5 +1,3 @@
-# Standard Library Imports
-
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
@@ -7,9 +5,7 @@ from plotly.offline import plot
 
 def plot_trend():
     df = pd.read_csv('..\loews\Datasets\data.csv', parse_dates=['Report_Date'])
-
-    # Plot the trend
-    df['Report_Date'] = pd.to_datetime(df['Report_Date'])
+    df['Report_Date'] = pd.to_datetime(df['Report_Date'], format='%Y-%m-%d')
 
     monthly_tally = df.resample('M', on='Report_Date')['Land_Size(Acres)'].sum().reset_index()
 
