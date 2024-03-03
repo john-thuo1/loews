@@ -26,7 +26,6 @@ data = {
     'Distribution': random.choices(["Entire Field", "Paddock Only", "Entire Area", "Unknown"], k=num_rows),
     'GPS_Coordinates': [(fake.latitude(), fake.longitude()) for _ in range(num_rows)],
 }
-
 df = pd.DataFrame(data)
 df.to_csv("loews\Datasets\data.csv")
 

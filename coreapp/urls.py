@@ -9,8 +9,5 @@ urlpatterns = [
     path("dashboard/", dashboard, name="dashboard"),
     path('download/', download_data, name="download_data"),
     path("delete-chats/", delete_chats, name="delete_chats"),
-
-
-    
     
 ]

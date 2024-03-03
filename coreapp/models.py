@@ -90,12 +90,13 @@ class Report(models.Model):
         verbose_name = "Report" 
         verbose_name_plural = "Reports"  
 
+
 class Chat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
     response = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         verbose_name = "Chat"
         verbose_name_plural = "Chats"

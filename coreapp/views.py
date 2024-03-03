@@ -2,13 +2,21 @@
 import csv
 import re
 
+
 # Third-party Library Imports
+from bs4 import BeautifulSoup
 from decouple import config
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView
+from langchain.text_splitter import CharacterTextSplitter
+from langchain_community.document_loaders import WebBaseLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from PyPDF2 import PdfReader
+
 
 # Local Imports
 from .forms import ReportForm
@@ -48,13 +56,37 @@ def dashboard(request):
     
     return render(request, "coreapp/dashboard.html", context)
  
+ 
+def load_data():
+    pdf = "..\loews\Datasets\pesticides.pdf"
+    if pdf is not None:
+        pdf_reader = PdfReader(pdf)
+        text = ""
+        for page in pdf_reader.pages:
+            text += page.extract_text()
+    return text
+        
 
-def query_chat(message):
+def process_text(text):
+    text_splitter = CharacterTextSplitter(separator="\n", keep_separator=True, chunk_size=1000, 
+                                          chunk_overlap=200, length_function=len)
+    chunks = text_splitter.split_text(text)
+    
+    embeddings = OpenAIEmbeddings(api_key=config("OPENAI_API_KEY"))
+    knowledgeBase = FAISS.from_texts(chunks, embeddings)
+    return knowledgeBase
+
+
+def query_chat(message, similar_documents):
+    similar_documents = [str(doc_id) for doc_id in similar_documents]
+
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a locust outbreak mitigation expert."},
-            {"role": "user", "content": message},       
+            {"role": "user", "content": message},
+            {"role": "system", "content": "Similar documents: \n" + "\n".join(similar_documents)}
+       
         ]
     )
     answer = response.choices[0].message.content.strip()
@@ -82,8 +114,14 @@ def format_response(response):
 def rag_chat(request): 
     chats = Chat.objects.filter(user=request.user)
     if request.method == "POST":
+        # User Query
         message = request.POST.get("message")
-        response = query_chat(message)
+        
+        document = load_data()
+        knowledge_base = process_text(document)
+        similar_documents = knowledge_base.similarity_search(message)
+        
+        response = query_chat(message, similar_documents)
 
         chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
         chat.save()
@@ -93,7 +131,6 @@ def rag_chat(request):
 
 def download_data(request):
     reports_data = Report.objects.all().values()
-
     columns_to_drop = ['name', 'phone_number']
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="locusts_data.csv"'
@@ -115,11 +152,6 @@ def delete_chats(request):
     else:
         return JsonResponse({"error": "Invalid method. Use DELETE."})
         
-
-def contact_message(request):
-    return render(request, "coreapp/contact.html")
-
-
 
 class SelfReportCreateView(CreateView):
     model = Report
