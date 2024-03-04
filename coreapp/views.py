@@ -57,6 +57,9 @@ def dashboard(request):
     return render(request, "coreapp/dashboard.html", context)
  
  
+
+
+ 
 def load_data():
     pdf = "..\loews\Datasets\pesticides.pdf"
     if pdf is not None:

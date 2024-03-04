@@ -5,8 +5,8 @@ from plotly.offline import plot
 
 
 def plot_trend():
-    df = pd.read_csv('..\loews\Datasets\data.csv', parse_dates=['Report_Date'])
-    df['Report_Date'] = pd.to_datetime(df['Report_Date'], format='%Y-%m-%d')
+    df = pd.read_csv("..\loews\Datasets\data.csv", parse_dates=["Report_Date"])
+    df['Report_Date'] = pd.to_datetime(df['Report_Date'])
 
     monthly_tally = df.resample('M', on='Report_Date')['Land_Size(Acres)'].sum().reset_index()
 

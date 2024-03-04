@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
 <html lang="en">
@@ -68,11 +67,6 @@
         </a>
     </li>
 
-      <li>
-          <a href="#" class="nav-item nav-link">
-              <i class="fas fa-cog me-2"></i> Settings
-          </a>
-      </li>
   </ul>
 
   <ul class="list-unstyled CTAs">
@@ -143,7 +137,7 @@
                   <!-- Notification icon -->
                   <li class="nav-item" style="margin-left: 130px;">
                     <a class="nav-link" href="#">
-                      <i class="fas fa-bell fa-lg"></i>
+                      <i class="fas fa-bell fa-lg shake"></i>
                     </a>
                   </li>
         
@@ -230,7 +224,28 @@
 
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        function filterCardBodies(event) {
+          const searchQuery = event.target.value.toLowerCase(); 
+      
+          const cardBodies = document.querySelectorAll('.card-body');
+      
+          cardBodies.forEach(function(card) {
   
+            if (card.textContent.toLowerCase().includes(searchQuery)) {
+              card.parentNode.style.display = ''; 
+            } else {
+              card.parentNode.style.display = 'none'; 
+            }
+          });
+        }
+      
+        const searchBar = document.querySelector('input[type="search"]'); 
+        searchBar.addEventListener('input', filterCardBodies);
+      });
+      </script>
+      
   </body>
 </html>
 

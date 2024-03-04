@@ -1,7 +1,3 @@
-/*
-    DEMO STYLE
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&display=swap');
 body {
     font-family: 'Nunito Sans', sans-serif;
@@ -46,9 +42,7 @@ a:focus {
     margin: 40px 0;
 }
 
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
+Sidebar
 
 .wrapper {
     display: flex;
@@ -144,10 +138,7 @@ a.article:hover {
     box-shadow: 0 0 10px 2px #262B40;
 }
 
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
+/* Content Styling */
 .card-title {
     font-size: 16px;
 }
@@ -165,9 +156,25 @@ a.article:hover {
     transition: all 0.3s;
 }
 
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
+
+/* Notifications Styling */
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  
+.shake {
+    display: inline-block; 
+    animation: shake 0.5s; 
+    animation-iteration-count: infinite; 
+  }
+  
+
+  /* Responsive Implementation */
 
 @media (max-width: 768px) {
     #sidebar.active {
