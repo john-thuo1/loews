@@ -159,7 +159,7 @@ a.article:hover {
 
 /* Notifications Styling */
 
-@keyframes shake {
+/* @keyframes shake {
     0% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     50% { transform: translateX(5px); }
@@ -171,7 +171,7 @@ a.article:hover {
     display: inline-block; 
     animation: shake 0.5s; 
     animation-iteration-count: infinite; 
-  }
+  } */
   
 
   /* Responsive Implementation */

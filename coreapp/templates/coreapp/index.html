@@ -2,25 +2,52 @@
 
 {% block content %}
 
-<!--Export Data Button-->
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+<div class="row justify-content-center py-4">
+  <div class="col-auto">
+    <div class="d-flex align-items-center">
+      <button type="button" class="btn btn-link ms-2" data-bs-toggle="modal" data-bs-target="#questionModal">
+        <span class="fas fa-question-circle"></span>
+      </button>
+      <h4 class="mb-0">Locust Breeding Grounds Mapping</h4>
+      <!-- Trigger Modal Button -->
+    </div>
+  </div>
 </div>
 
+<!-- Question Mark Modal -->
+<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="questionModalLabel">Map Navigational Instructions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Here's how you can make the most out of the Map : </p>
+  <ul>
+    <li><strong>Zoom In/Out:</strong> Use the zoom controls on the Top Left corner of the map to zoom in and out to get a closer look at specific areas or get a broader view of the region.</li>
+    <li><strong>View Marker Details:</strong> Click on any Cluster Markers to view details about the location and the area affected.When done , Zoom Out.</li>
+    <li><strong>Explore Geographic Boundaries:</strong> The map includes Kenya's vector boundaries. You can see these boundaries outlined on the map in BLUE, providing context for the locust breeding grounds.</li>
+  </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!--Row 1-->
+<!-- Row 1 -->
 <div class="row justify-content-md-center">
-
   <div class="col-12 mb-4"> 
     <div class="card bg-yellow-alt shadow-sm" style="height: auto; min-height: 700px;"> 
       <div class="card-header d-flex flex-row align-items-center flex-0">
       </div>
       <div class="card-body pl-5 pr-5 pt-4 pb-4">
-        
         {{ map_html|safe }}
-
-       </div>
+      </div>
     </div>
   </div>   
 </div>
 
-{% endblock content%}
+{% endblock content %}

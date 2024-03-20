@@ -158,7 +158,7 @@ def plot_predictionmap():
             popup_content = f"<b>Location</b> : {df.iloc[i]['Loc_Name']} </br><b>Area Affected</b> : {df.iloc[i]['Area']} Acres"
             folium.Marker(
                 location=[lat, lon],
-                popup=folium.Popup(popup_content,  max_width=600, max_height=450)
+                popup=folium.Popup(popup_content,  max_width=800, max_height=450)
             ).add_to(marker_cluster)
 
     if geojson_path:
