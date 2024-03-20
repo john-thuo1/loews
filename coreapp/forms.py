@@ -10,3 +10,5 @@ class ReportForm(forms.ModelForm):
             'report_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
+
+

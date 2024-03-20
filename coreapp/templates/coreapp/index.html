@@ -4,45 +4,23 @@
 
 <!--Export Data Button-->
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
- </div>
+</div>
 
 
 <!--Row 1-->
-  <div class="row justify-content-md-center">
+<div class="row justify-content-md-center">
 
-    <!-- Main Graph- Trend -->
-    <div class="col-10 mb-4">
-      <div class="card bg-yellow-alt shadow-sm">
-        <div class="card-header d-flex flex-row align-items-center flex-0">
-        </div>
-        <div class="card-body pl-5 pr-2 pt-2 pb-2">
-          
-          <img src="\static\images\Kenya.png" alt="Kenyan Map" style="margin-left: 160px;">
-
-        </div>
+  <div class="col-12 mb-4"> 
+    <div class="card bg-yellow-alt shadow-sm" style="height: auto; min-height: 700px;"> 
+      <div class="card-header d-flex flex-row align-items-center flex-0">
       </div>
-    </div>   
-  </div>
+      <div class="card-body pl-5 pr-5 pt-4 pb-4">
+        
+        {{ map_html|safe }}
 
-
-
-
-<!--Row 2 -->
-<div class="row">
-  
-  <div class="col-12 col-xl-8 mb-4">
-
-    
-  <div class="col-12 col-xl-4 mb-4">
-    
-      
+       </div>
     </div>
-
-
-    
-
-
-  </div>
+  </div>   
 </div>
 
 {% endblock content%}

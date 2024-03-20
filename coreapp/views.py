@@ -20,7 +20,7 @@ from PyPDF2 import PdfReader
 
 # Local Imports
 from .forms import ReportForm
-from .graph_utils import (plot_trend, plot_regions, plot_seasonality, plot_vegetation)
+from .graph_utils import (plot_trend, plot_regions, plot_seasonality, plot_vegetation, plot_predictionmap)
 from .models import Report
 from openai import OpenAI
 from .models import Chat
@@ -30,12 +30,6 @@ client = OpenAI(
     api_key=config("OPENAI_API_KEY"),
 )
 
-
-def home(request): 
-    trends_html = plot_trend()
-
-    context = {"trends_html": trends_html}
-    return render(request, "coreapp/index.html", context)   
 
 
 def control_mitigation(request):
@@ -154,7 +148,22 @@ def delete_chats(request):
         return JsonResponse({"message": "Chats deleted successfully"})
     else:
         return JsonResponse({"error": "Invalid method. Use DELETE."})
-        
+       
+
+def map_predictions(request):
+    map_html = plot_predictionmap()
+    context = {'map_html': map_html._repr_html_()}
+    return  render(request, "coreapp/index.html", context)
+
+def dashboard(request):
+    trends_html = plot_trend()
+    table_html = plot_regions()[0]
+    season_html = plot_seasonality()
+    vegetation_html = plot_vegetation()
+    context = {'trends_html': trends_html, 'table_html': table_html, 
+               'season_html': season_html, 'vegetation_html': vegetation_html}
+    
+    return render(request, "coreapp/dashboard.html", context)
 
 class SelfReportCreateView(CreateView):
     model = Report

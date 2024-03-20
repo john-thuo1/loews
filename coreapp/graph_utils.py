@@ -1,4 +1,7 @@
 # Third Party Imports
+import folium
+from folium.plugins import MarkerCluster
+import json
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
@@ -37,8 +40,6 @@ def plot_regions():
     pivot_df = grouped_df.pivot(index='Location', columns='Category', values='Count').reset_index()
 
     sorted_df = pivot_df.sort_values(by='Infestation', ascending=False).head(209)
-
-  # Table
 
     table_html = """
     <div class="table-responsive">
@@ -140,4 +141,41 @@ def plot_vegetation():
     return vegetation_html
 
 
+def plot_predictionmap():
+    df = pd.read_csv('..\loews\Datasets\predictions.csv', encoding='utf-8')
+    geojson_path = '..\loews\Datasets\kenya_vector_boundaries1.geojson'
+    with open(geojson_path, 'r', encoding='utf-8') as f:
+        geojson_data = json.load(f)
+
+
+    prediction_map = folium.Map(location=[-0.0236, 37.9062], zoom_start=6)
+    marker_cluster = MarkerCluster().add_to(prediction_map)
+    for i in range(len(df)):
+        # Check if the 'Predictions' column value is 1 for the current row
+        if df.iloc[i]['Predictions'] == 1:
+            lat = df.iloc[i]['Latitude']
+            lon = df.iloc[i]['Longitude']
+            popup_content = f"<b>Location</b> : {df.iloc[i]['Loc_Name']} </br><b>Area Affected</b> : {df.iloc[i]['Area']} Acres"
+            folium.Marker(
+                location=[lat, lon],
+                popup=folium.Popup(popup_content,  max_width=600, max_height=450)
+            ).add_to(marker_cluster)
+
+    if geojson_path:
+        folium.GeoJson(
+            geojson_data,
+            name='geojson',
+             style_function=lambda x: {
+              'fillColor': '#0000ff',
+              'color': '#0000ff',
+              'weight': 1,
+              'fillOpacity': 0
+          },
+        ).add_to(prediction_map)
+
+    return prediction_map
+    
+
+
+ 
 
