@@ -4,7 +4,6 @@ import re
 
 
 # Third-party Library Imports
-from bs4 import BeautifulSoup
 from decouple import config
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
@@ -61,8 +60,7 @@ def load_data():
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
-    return text
-        
+    return text    
 
 def process_text(text):
     text_splitter = CharacterTextSplitter(separator="\n", keep_separator=True, chunk_size=1000, 
