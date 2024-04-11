@@ -26,15 +26,6 @@ def plot_trend():
     prophet_pred = plot_prophet_predictions(monthly_tally)
     fig.add_trace(go.Scatter(x=prophet_pred['ds'], y=prophet_pred['yhat'], mode='lines', line=dict(dash='dot'), name='Prophet Predictions', showlegend=False))
 
-    # Adding a vertical line for the start of future predictions
-    future_start_date = pd.to_datetime("2024-01-01")
-
-    # fig.update_layout(shapes=[
-    #     dict(type="line",
-    #          x0=future_start_date, y0=0, x1=future_start_date, y1=1,
-    #          line=dict(color="red", width=2, dash="dot")
-    #         )
-    # ])
     
     fig.update_layout(title='Land Size Affected by Locusts',
                       xaxis_title='Year',
