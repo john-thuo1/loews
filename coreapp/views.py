@@ -9,12 +9,15 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.views.generic import CreateView
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.document_loaders import WebBaseLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from PyPDF2 import PdfReader
+from PyPDF2 import PdfFileReader
+import markupsafe
+
 
 
 # Local Imports
@@ -50,9 +53,6 @@ def dashboard(request):
     return render(request, "coreapp/dashboard.html", context)
  
  
-
-
- 
 def load_data():
     pdf = "..\loews\Datasets\pesticides.pdf"
     if pdf is not None:
@@ -60,7 +60,9 @@ def load_data():
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
-    return text    
+    return text  
+
+    
 
 def process_text(text):
     text_splitter = CharacterTextSplitter(separator="\n", keep_separator=True, chunk_size=1000, 
@@ -112,18 +114,25 @@ def rag_chat(request):
         # User Query
         message = request.POST.get("message")
         
-        document = load_data()
-        knowledge_base = process_text(document)
+        document_text = load_data()
+        knowledge_base = process_text(document_text)
         similar_documents = knowledge_base.similarity_search(message)
         
         response = query_chat(message, similar_documents)
 
-        chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
+        citations = ["Heinrich Boll Foundation. (2023, September). HIGHLY HAZARDOUS PESTICIDES IN KENYA. Heinrich Boll Foundation. Retrieved April 11, 2024, from https://ke.boell.org/sites/default/files/2023-09/data-and-facts_highly-hazardous-pesticides-in-kenya-1.pdf",
+                    "Pest Control Products Board. (2020). Registration Review of Pest Control Products containing the following Active Ingredients: Circular-Diuron: https://bit.ly/3K4eT1n",
+                    ]
+        numbered_citations = "\n".join([f"{i+1}. {citation}" for i, citation in enumerate(citations)])
+
+        combined_response = f"{response}\nReferences\n{numbered_citations}"
+
+        chat = Chat(user=request.user, message=message, response=combined_response, created_at=timezone.now())
         chat.save()
-        return JsonResponse({"message": message, "response": format_response(response)})
+        return JsonResponse({"message": message, "response": format_response(combined_response)})
     return render(request, "coreapp/chat.html", {"chats": chats})
 
-
+# Modify function implementation
 def download_data(request):
     reports_data = Report.objects.all().values()
     columns_to_drop = ['name', 'phone_number']
@@ -153,6 +162,7 @@ def map_predictions(request):
     context = {'map_html': map_html._repr_html_()}
     return  render(request, "coreapp/index.html", context)
 
+
 def dashboard(request):
     trends_html = plot_trend()
     table_html = plot_regions()[0]
@@ -162,6 +172,7 @@ def dashboard(request):
                'season_html': season_html, 'vegetation_html': vegetation_html}
     
     return render(request, "coreapp/dashboard.html", context)
+
 
 class SelfReportCreateView(CreateView):
     model = Report

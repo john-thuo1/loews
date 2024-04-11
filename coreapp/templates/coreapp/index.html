@@ -2,15 +2,13 @@
 
 {% block content %}
 
-<div class="row justify-content-center py-4">
+<div class="row justify-content-center">
   <div class="col-auto">
     <div class="d-flex align-items-center">
       <button type="button" class="btn btn-link ms-2" data-bs-toggle="modal" data-bs-target="#questionModal">
         <span class="fas fa-question-circle"></span>
       </button>
-      <h4 class="mb-0">Locust Breeding Grounds Mapping</h4>
-
-      <!-- Trigger Modal Button -->
+      <h4>Locust Breeding Grounds Mapping</h4>
     </div>
   </div>
 </div>
@@ -41,8 +39,8 @@
 <!-- Row 1 -->
 <div class="row justify-content-md-center">
   <div class="col-12 mb-4"> 
-    <div class="card bg-yellow-alt shadow-sm" style="height: auto; min-height: 700px;"> 
-      <div class="card-header d-flex flex-row align-items-center flex-0">
+    <div class="card flex-grow-1 bg-yellow-alt shadow-sm" style="height: auto;"> 
+      <div class="card-header d-flex flex-row align-items-center flex-0"  style="background-color: #262B40; color: white;">
       </div>
       <div class="card-body pl-5 pr-5 pt-4 pb-4">
         {{ map_html|safe }}
