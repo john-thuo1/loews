@@ -1,9 +1,11 @@
 # Third Party Imports
+from prophet import Prophet
 import folium
 from folium.plugins import MarkerCluster
 import json
 import pandas as pd
 import plotly.graph_objects as go
+
 from plotly.offline import plot
 
 
@@ -11,18 +13,47 @@ def plot_trend():
     df = pd.read_csv("..\loews\Datasets\data.csv", parse_dates=["Report_Date"])
     df['Report_Date'] = pd.to_datetime(df['Report_Date'])
 
+    # Filtering data up to 2023
+    df = df[df['Report_Date'].dt.year <= 2023]
+
     monthly_tally = df.resample('M', on='Report_Date')['Land_Size(Acres)'].sum().reset_index()
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=monthly_tally['Report_Date'], y=monthly_tally['Land_Size(Acres)'], mode='lines+markers', marker=dict(size=10),
-                             name='Affected Monthly Land Size in Acres For both Infestation and Breeding Grounds'))
-    fig.update_layout(title='Land Size Affected',
-                      xaxis_title='Month, Year',
+                             name='Affected Monthly Land Size in Acres For both Infestation and Breeding Grounds', showlegend=False))
+    
+    # Adding Prophet predictions
+    prophet_pred = plot_prophet_predictions(monthly_tally)
+    fig.add_trace(go.Scatter(x=prophet_pred['ds'], y=prophet_pred['yhat'], mode='lines', line=dict(dash='dot'), name='Prophet Predictions', showlegend=False))
+
+    # Adding a vertical line for the start of future predictions
+    future_start_date = pd.to_datetime("2024-01-01")
+
+    # fig.update_layout(shapes=[
+    #     dict(type="line",
+    #          x0=future_start_date, y0=0, x1=future_start_date, y1=1,
+    #          line=dict(color="red", width=2, dash="dot")
+    #         )
+    # ])
+    
+    fig.update_layout(title='Land Size Affected by Locusts',
+                      xaxis_title='Year',
                       yaxis_title='Land Size (Acres)',
                       title_x=0.5)
 
     trends_html = plot(fig, output_type='div')
     return trends_html
+
+def plot_prophet_predictions(data):
+    prophet_df = data.rename(columns={'Report_Date': 'ds', 'Land_Size(Acres)': 'y'})
+    model = Prophet()
+    model.fit(prophet_df)
+
+     # Forecasting for 12 months into the future
+    future = model.make_future_dataframe(periods=12, freq='M') 
+    forecast = model.predict(future)
+    
+    return forecast[['ds', 'yhat']]
 
 
 def plot_regions():

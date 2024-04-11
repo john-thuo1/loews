@@ -9,14 +9,11 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.safestring import mark_safe
 from django.views.generic import CreateView
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from PyPDF2 import PdfReader
-from PyPDF2 import PdfFileReader
-import markupsafe
 
 
 
