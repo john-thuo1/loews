@@ -129,6 +129,7 @@ def rag_chat(request):
         return JsonResponse({"message": message, "response": format_response(combined_response)})
     return render(request, "coreapp/chat.html", {"chats": chats})
 
+
 # Modify function implementation
 def download_data(request):
     reports_data = Report.objects.all().values()

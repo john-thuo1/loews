@@ -5,15 +5,12 @@ from folium.plugins import MarkerCluster
 import json
 import pandas as pd
 import plotly.graph_objects as go
-
 from plotly.offline import plot
 
 
 def plot_trend():
     df = pd.read_csv("..\loews\Datasets\data.csv", parse_dates=["Report_Date"])
     df['Report_Date'] = pd.to_datetime(df['Report_Date'])
-
-    # Filtering data up to 2023
     df = df[df['Report_Date'].dt.year <= 2023]
 
     monthly_tally = df.resample('M', on='Report_Date')['Land_Size(Acres)'].sum().reset_index()
@@ -26,7 +23,12 @@ def plot_trend():
     prophet_pred = plot_prophet_predictions(monthly_tally)
     fig.add_trace(go.Scatter(x=prophet_pred['ds'], y=prophet_pred['yhat'], mode='lines', line=dict(dash='dot'), name='Prophet Predictions', showlegend=False))
 
-    
+    # Adding vertical line for future predictions
+    # Note : Error while using fig.add_vline on Plotly (unsupported operand type(s) for +: 'int' and 'datetime.datetime')
+    future_date = pd.to_datetime('2023-12-31')
+    future_date1 = pd.to_datetime('2024-01-01')
+    fig.add_vrect(x0=future_date, x1=future_date1, line_dash="dash", line_color="red")
+
     fig.update_layout(title='Land Size Affected by Locusts',
                       xaxis_title='Year',
                       yaxis_title='Land Size (Acres)',
@@ -40,11 +42,12 @@ def plot_prophet_predictions(data):
     model = Prophet()
     model.fit(prophet_df)
 
-     # Forecasting for 12 months into the future
-    future = model.make_future_dataframe(periods=12, freq='M') 
+    # Forecasting for 12 months into the future
+    future = model.make_future_dataframe(periods=12, freq='M')
     forecast = model.predict(future)
-    
+
     return forecast[['ds', 'yhat']]
+
 
 
 def plot_regions():

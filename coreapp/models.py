@@ -23,17 +23,6 @@ class Report(models.Model):
         ("Unknown", "Unknown"),
     ]
 
-    LAND_SIZE = [
-        ("< 1 Acre", "< 1 Acre"),
-        ("1 Acre", "1 Acre"),
-        ("2 Acres", "2 Acres"),
-        ("> 5 Acres", "> 5 Acres"),
-        ("1 Ha", "1 Ha"),
-        ("> 1 Ha", "> 1 Ha"),
-        ("> 10 Ha", "> 10 Ha"),
-        ("> 100 Ha", "> 100 Ha"),
-    ]
-
     LOCUST_DISTRIBUTION = [
         ("Entire Field", "Entire Field"),
         ("Paddock Only", "Paddock Only"),
@@ -73,7 +62,7 @@ class Report(models.Model):
     report_date = models.DateField(help_text="Choose Date when Infestation/Breeding was noticed from the Calender")
     species = models.CharField(help_text="Enter the Locust Species", choices=TYPE_SPECIES, max_length=150)
     stage = models.CharField(help_text="Enter the Locust Stage", choices=LOCUST_STAGE, max_length=150)
-    size = models.CharField(help_text="Land Size Infested/Breeding Ground", choices=LAND_SIZE, max_length=150)
+    size = models.FloatField(help_text="Enter Land Size Infested/Breeding Grounds in Acres")
     distribution = models.CharField(help_text="Locust Distribution", choices=LOCUST_DISTRIBUTION, max_length=150)
     image = models.ImageField(
         help_text="Upload a clear Image of Area Infested",
@@ -84,7 +73,6 @@ class Report(models.Model):
     season = models.CharField(help_text="Location Season", choices=LOCATION_SEASON, max_length=255)
     soil_type = models.CharField(help_text="Enter the Soil Type in the Affected Field especially for Breeding Grounds",choices=SOIL, max_length=255)
     vegetation_details = models.CharField(help_text="Vegetation types in the context of locusts (Cultivated and Agricultural areas).", choices=VEGETATION_COVER, max_length=255)
-    gps_coordinates = models.CharField(help_text="Longitude, latitude e.g (-34.6, 26.1)", max_length=30)
     
     class Meta:
         verbose_name = "Report" 
@@ -105,6 +93,5 @@ class Chat(models.Model):
         return f'{self.user.username}: {self.message}'
 
 
-# class Prediction(models.Model):
     
     
