@@ -14,17 +14,21 @@ To set up Loews locally:
 2. Configure your own Project API Key on OpenAI Platform.
 3. Set Up an env file with the following secret keys - `SECRET_KEY`, `OPENAI_API_KEY`, and `DEBUG`.
 4. Install the required libraries from `requirements.txt`.
-5. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
-6. Set Up a Superuser - `python manage.py createsuperuser`.
-7. Set up a media directory on the Current Directory.
-8. Run the Project - `python manage.py runserver 3000`.
-9. Project APP URL - [http://127.0.0.1:3000/coreapp/](http://127.0.0.1:3000/coreapp/)
+5.  For FAISS installation, install the binary package maintained by Meta -  `pip install faiss-cpu` or with CUDA Support.
+6. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
+7. Set Up a Superuser - `python manage.py createsuperuser`.
+8. Set up a media directory on the Current Directory.
+9. Run the Project - `python manage.py runserver 3000`.
+10. Project APP URL - [http://127.0.0.1:3000/coreapp/](http://127.0.0.1:3000/coreapp/)
 
 ### Sample Pages
 - ![Home Page](https://github.com/john-thuo1/loews/assets/108690517/34ab9c61-c028-4731-a192-e293669b767e)
 - ![Analytics Page](https://github.com/john-thuo1/loews/assets/108690517/e7c4a91f-ae5d-4165-a6c9-3eeb3ea5a255)
+- ![Chatbot Page](https://github.com/john-thuo1/loews/assets/108690517/eaecb147-dee4-4efc-9563-4897a64c054b)
+
 
 ## Future Steps
 1. Automating Data Processing Steps using tools such as Airflow.
 2. Implementing Realtime Predictions on the App with models running on AWS. Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and only mapped out in the Application for Visualization Purposes. 
 3. Incorporate Multilanguage Support.
+4. Implementing an improved method of Referencing in Chat Outputs for RAG. Currently , I have only included the PDF Source as my references. However, the References should refer to the exact text chunks extracted and the associated citations.
