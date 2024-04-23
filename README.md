@@ -10,14 +10,15 @@ The Chatbot Functionality is implemented using Retrieval Augmented Generation (R
 ## Local Project Set Up
 To set up Loews locally:
 
-1. Create a virtual environment locally and clone the project - either use conda or venv.
-2. Configure Project API Key on OpenAI Platform.
+1. Create a virtual environment locally, activate it and then clone the project - `python -m venv loews_project`.
+2. Configure your own Project API Key on OpenAI Platform.
 3. Set Up an env file with the following secret keys - `SECRET_KEY`, `OPENAI_API_KEY`, and `DEBUG`.
 4. Install the required libraries from `requirements.txt`.
 5. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
 6. Set Up a Superuser - `python manage.py createsuperuser`.
-7. Run the Project - `python manage.py runserver 3000`.
-8. Project APP URL - [http://127.0.0.1:3000/coreapp/](http://127.0.0.1:3000/coreapp/)
+7. Set up a media directory on the Current Directory.
+8. Run the Project - `python manage.py runserver 3000`.
+9. Project APP URL - [http://127.0.0.1:3000/coreapp/](http://127.0.0.1:3000/coreapp/)
 
 ### Sample Pages
 - ![Home Page](https://github.com/john-thuo1/loews/assets/108690517/34ab9c61-c028-4731-a192-e293669b767e)
