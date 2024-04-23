@@ -26,5 +26,5 @@ To set up Loews locally:
 
 ## Future Steps
 1. Automating Data Processing Steps using tools such as Airflow.
-2. Implementing Realtime Predictions on the App. Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and only mapped out in the Application for Visualization Purposes. 
+2. Implementing Realtime Predictions on the App with models running on AWS. Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and only mapped out in the Application for Visualization Purposes. 
 3. Incorporate Multilanguage Support.
