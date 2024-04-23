@@ -24,6 +24,8 @@ To set up Loews locally:
 ### Sample Pages
 - ![Home Page](https://github.com/john-thuo1/loews/assets/108690517/34ab9c61-c028-4731-a192-e293669b767e)
 - ![Analytics Page](https://github.com/john-thuo1/loews/assets/108690517/e7c4a91f-ae5d-4165-a6c9-3eeb3ea5a255)
+- ![Chatbot Page](https://github.com/john-thuo1/loews/assets/108690517/eaecb147-dee4-4efc-9563-4897a64c054b)
+
 
 ## Future Steps
 1. Automating Data Processing Steps using tools such as Airflow.
