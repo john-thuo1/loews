@@ -14,7 +14,7 @@ To set up Loews locally:
 2. Configure your own Project API Key on OpenAI Platform.
 3. Set Up an env file with the following secret keys - `SECRET_KEY`, `OPENAI_API_KEY`, and `DEBUG`.
 4. Install the required libraries from `requirements.txt`.
-5.  For FAISS installation, use `pip install faiss-cpu` or with CUDA Support.
+5.  For FAISS installation, install the binary package maintained by Meta -  `pip install faiss-cpu` or with CUDA Support.
 6. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
 7. Set Up a Superuser - `python manage.py createsuperuser`.
 8. Set up a media directory on the Current Directory.
