@@ -37,6 +37,7 @@ def plot_trend():
     trends_html = plot(fig, output_type='div')
     return trends_html
 
+
 def plot_prophet_predictions(data):
     prophet_df = data.rename(columns={'Report_Date': 'ds', 'Land_Size(Acres)': 'y'})
     model = Prophet()
@@ -47,7 +48,6 @@ def plot_prophet_predictions(data):
     forecast = model.predict(future)
 
     return forecast[['ds', 'yhat']]
-
 
 
 def plot_regions():

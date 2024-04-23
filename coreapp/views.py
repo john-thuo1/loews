@@ -13,7 +13,8 @@ from django.views.generic import CreateView
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
+
 
 
 
