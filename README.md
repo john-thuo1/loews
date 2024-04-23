@@ -31,3 +31,4 @@ To set up Loews locally:
 1. Automating Data Processing Steps using tools such as Airflow.
 2. Implementing Realtime Predictions on the App with models running on AWS. Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and only mapped out in the Application for Visualization Purposes. 
 3. Incorporate Multilanguage Support.
+4. Implementing an improved method of Referencing in Chat Outputs for RAG. Currently , I have only included the PDF Source as my references. However, the References should refer to the exact text chunks extracted and the associated citations.
