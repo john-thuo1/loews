@@ -1,6 +1,4 @@
-# Project Name: Loews - Locust Early Warning System
-
-## Project Description
+# Project Description
 Loews aims to develop a locust early warning system leveraging Geospatial Data to map locust breeding grounds for early intervention. It provides up-to-date information and analysis on locust outbreaks and mitigation measures in Kenya to stakeholders such as farmers, the government, and other agencies. 
 
 To identify breeding grounds, Loews utilizes a Random Forest Model trained on 5000 Geospatial Data Points with main features including Rainfall, Temperature, and Soil Type. The mapping of breeding grounds is visualized using the Folium Library, with markers indicating possible breeding grounds and land sizes. 
