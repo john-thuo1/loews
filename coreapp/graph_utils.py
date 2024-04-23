@@ -46,7 +46,6 @@ def plot_prophet_predictions(data):
     # Forecasting for 12 months into the future
     future = model.make_future_dataframe(periods=12, freq='M')
     forecast = model.predict(future)
-
     return forecast[['ds', 'yhat']]
 
 
