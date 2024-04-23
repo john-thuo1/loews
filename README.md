@@ -5,7 +5,9 @@ Loews aims to develop a locust early warning system leveraging Geospatial Data t
 
 To identify breeding grounds, Loews utilizes a Random Forest Model trained on 5000 Geospatial Data Points with main features including Rainfall, Temperature, and Soil Type. The mapping of breeding grounds is visualized using the Folium Library, with markers indicating possible breeding grounds and land sizes. 
 
-Additionally, visualizations on the Analytics Page utilize Synthetic Data generated using the Faker Library, simulating data collected from farmers on locust sightings in Kenya. The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.
+Additionally, visualizations on the Analytics Page utilize Synthetic Data generated using the Faker Library, simulating data that will be collected from farmers on locust sightings in Kenya. 
+
+The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.Future plan is to have this not provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as Ministry of Agriculture e.t.c to counter `gpt3.5-turbo` Hallucinations & lack of updated information.
 
 ## Local Project Set Up
 To set up Loews locally:
@@ -14,7 +16,7 @@ To set up Loews locally:
 2. Configure Project API Key on OpenAI Platform.
 3. Set Up an env file with the following secret keys - `SECRET_KEY`, `OPENAI_API_KEY`, and `DEBUG`.
 4. Install the required libraries from `requirements.txt`.
-5. Carry out Database Migrations - `python manage.py makemigrations`, then migrate.
+5. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
 6. Set Up a Superuser - `python manage.py createsuperuser`.
 7. Run the Project - `python manage.py runserver 3000`.
 8. Project APP URL - [http://127.0.0.1:3000/coreapp/](http://127.0.0.1:3000/coreapp/)
