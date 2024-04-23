@@ -5,7 +5,7 @@ To identify breeding grounds, Loews utilizes a Random Forest Model trained on 50
 
 Additionally, visualizations on the Analytics Page utilize Synthetic Data generated using the Faker Library, simulating data that will be collected from farmers on locust sightings in Kenya. 
 
-The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.Future plan is to have this not provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as Ministry of Agriculture e.t.c to counter `gpt3.5-turbo` Hallucinations & lack of updated information.
+The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.Future plan is to have this provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as Ministry of Agriculture e.t.c to counter `gpt3.5-turbo` Hallucinations & lack of updated information.
 
 ## Local Project Set Up
 To set up Loews locally:
