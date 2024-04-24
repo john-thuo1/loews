@@ -8,7 +8,7 @@ Additionally, visualizations on the Analytics Page utilize Synthetic Data genera
 The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.Future plan is to have this provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as Ministry of Agriculture e.t.c to counter `gpt3.5-turbo` Hallucinations & lack of updated information.
 
 ## Local Project Set Up
-To set up Loews locally without Docker:
+#### To set up Loews locally without Docker:
 
 1. Create a virtual environment locally, activate it and then clone the project - `python -m venv loews_project`.
 2. Cd into the `loews` directory.
@@ -22,7 +22,7 @@ To set up Loews locally without Docker:
 10. Run the Project - `python manage.py runserver 3000`.
 11. Project APP URL - `http://localhost:3000 / http://127.0.0.1:3000`
 
-To set up Loews locally using Docker Image ( if you have Docker Desktop already installed and running):
+#### To set up Loews locally using Docker Image ( if you have Docker Desktop already installed and running):
 
 1. Navigate to the Project Directory and build the Docker Image - `docker-compose build`.
 2. Once the image is built successfully, run the Docker container - `docker-compose up`.
