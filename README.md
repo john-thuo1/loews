@@ -17,18 +17,21 @@ The Chatbot Functionality is implemented using Retrieval Augmented Generation (R
 5. Install the required libraries from `requirements.txt`.
 6. For FAISS installation, install the binary package maintained by Meta -  `pip install faiss-cpu` or with CUDA Support.
 7. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
-8. Set Up a Superuser - `python manage.py createsuperuser`.
-9. Set up a media directory on the Current Directory.
-10. Run the Project - `python manage.py runserver 3000`.
+8. Set up a media directory on the Current Directory.
+9. Set Up a Superuser  - `python manage.py createsuperuser`.
+10. Run the Project - `python manage.py runserver 3000`. 
 11. Project APP URL - `http://localhost:3000 / http://127.0.0.1:3000`
+12. Log in on the backend with the details entered on Step 9 to view reports/chats - `http://127.0.0.1:3000/admin`  
 
 #### To set up Loews locally using Docker Image ( if you have Docker Desktop already installed and running):
 
-1. Navigate to the Project Directory and build the Docker Image - `docker-compose build`.
+1. Navigate to the Project Directory after Step 1 above(^) and build the Docker Image - `docker-compose build`.
 2. Once the image is built successfully, run the Docker container - `docker-compose up`.
-3. After the container is up and running, you can access the application via  `http://localhost:3000 / http://127.0.0.1:3000`.
-4. To remove the Docker container and image - `docker-compose down`.
-5. Check out `Dockerfile & docker-compose.yaml` to see how the Image file is set up.
+3. After container is running, login to the app's Backend via `http://localhost:3000/admin OR http://127.0.0.1:3000/admin` with username : `admin` password : `adhominem1234`.
+4. Note, you can change the Backend Credentials by editing them on the `Dockerfile & docker-compose.yaml` files.
+5. Frontend Application  Access url - `http://localhost:3000 / http://127.0.0.1:3000`.
+6. To remove the Docker container and image - `docker-compose down`.
+7. Check out `Dockerfile & docker-compose.yaml` to see how the Image file is set up.
 
 
 ### Sample Pages
