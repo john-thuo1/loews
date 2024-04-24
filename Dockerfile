@@ -19,5 +19,12 @@ COPY . .
 # Copy datasets into the container( only necessary if large files to avoid multiple reruns with every update)
 COPY Datasets /loews/Datasets
 
+# Run migrations
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+
+# Create superuser
+RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'adhominem1234')" | python manage.py shell
+
 # Command to run the Django development server when the container starts
 CMD ["python", "manage.py", "runserver", "0.0.0.0:3000"]
