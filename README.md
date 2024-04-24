@@ -24,7 +24,7 @@ The Chatbot Functionality is implemented using Retrieval Augmented Generation (R
 
 #### To set up Loews locally using Docker Image ( if you have Docker Desktop already installed and running):
 
-1. Navigate to the Project Directory and build the Docker Image - `docker-compose build`.
+1. Navigate to the Project Directory after cloning repo and build the Docker Image - `docker-compose build`.
 2. Once the image is built successfully, run the Docker container - `docker-compose up`.
 3. After the container is up and running, you can access the application via  `http://localhost:3000 / http://127.0.0.1:3000`.
 4. To remove the Docker container and image - `docker-compose down`.
