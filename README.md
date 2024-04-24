@@ -8,19 +8,28 @@ Additionally, visualizations on the Analytics Page utilize Synthetic Data genera
 The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.Future plan is to have this provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as Ministry of Agriculture e.t.c to counter `gpt3.5-turbo` Hallucinations & lack of updated information.
 
 ## Local Project Set Up
-To set up Loews locally:
+To set up Loews locally without Docker:
 
 1. Create a virtual environment locally, activate it and then clone the project - `python -m venv loews_project`.
 2. Cd into the `loews` directory.
 3. Configure your own Project API Key on OpenAI Platform.
 4. Set Up an env file with the following secret keys - `SECRET_KEY`, `OPENAI_API_KEY`, and `DEBUG`.
 5. Install the required libraries from `requirements.txt`.
-6.  For FAISS installation, install the binary package maintained by Meta -  `pip install faiss-cpu` or with CUDA Support.
+6. For FAISS installation, install the binary package maintained by Meta -  `pip install faiss-cpu` or with CUDA Support.
 7. Carry out Database Migrations - `python manage.py makemigrations`, then `migrate`.
 8. Set Up a Superuser - `python manage.py createsuperuser`.
 9. Set up a media directory on the Current Directory.
 10. Run the Project - `python manage.py runserver 3000`.
-11. Project APP URL - [http://127.0.0.1:3000/coreapp/](http://127.0.0.1:3000/coreapp/)
+11. Project APP URL - `http://localhost:3000 / http://127.0.0.1:3000`
+
+To set up Loews locally using Docker Image ( if you have Docker Desktop already installed and running):
+
+1. Navigate to the Project Directory and build the Docker Image - `docker-compose build`.
+2. Once the image is built successfully, run the Docker container - `docker-compose up`.
+3. After the container is up and running, you can access the application via  `http://localhost:3000 / http://127.0.0.1:3000`.
+4. To remove the Docker container and image - `docker-compose down`.
+5. Check out `Dockerfile & docker-compose.yaml` to see how the Image file is set up.
+
 
 ### Sample Pages
 - ![Home Page](https://github.com/john-thuo1/loews/assets/108690517/34ab9c61-c028-4731-a192-e293669b767e)
