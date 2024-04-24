@@ -10,7 +10,7 @@ admin.site.index_title = "Welcome to Loews Admin Portal"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("coreapp/", include("coreapp.urls")),
+    path("", include("coreapp.urls")),
 ]
 
 

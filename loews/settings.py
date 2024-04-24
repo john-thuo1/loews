@@ -42,6 +42,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "loews.urls"
 
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -106,6 +107,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Uploaded Images on Site
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 MEDIA_URL= '/media/'
+
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -52,7 +52,7 @@ def dashboard(request):
  
  
 def load_data():
-    pdf = "..\loews\Datasets\pesticides.pdf"
+    pdf = "Datasets/pesticides.pdf"
     if pdf is not None:
         pdf_reader = PdfReader(pdf)
         text = ""

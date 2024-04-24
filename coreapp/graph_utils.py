@@ -9,7 +9,8 @@ from plotly.offline import plot
 
 
 def plot_trend():
-    df = pd.read_csv("..\loews\Datasets\data.csv", parse_dates=["Report_Date"])
+    # ..\loews\Datasets\data.csv
+    df = pd.read_csv("Datasets/data.csv", parse_dates=["Report_Date"])
     df['Report_Date'] = pd.to_datetime(df['Report_Date'])
     df = df[df['Report_Date'].dt.year <= 2023]
 
@@ -50,7 +51,7 @@ def plot_prophet_predictions(data):
 
 
 def plot_regions():
-    df = pd.read_csv('..\loews\Datasets\data.csv')
+    df = pd.read_csv('Datasets/data.csv')
 
     df['Stage'] = df['Stage'].astype(str)
 
@@ -166,8 +167,8 @@ def plot_vegetation():
 
 
 def plot_predictionmap():
-    df = pd.read_csv('..\loews\Datasets\predictions.csv', encoding='utf-8')
-    geojson_path = '..\loews\Datasets\kenya_vector_boundaries1.geojson'
+    df = pd.read_csv('Datasets/predictions.csv', encoding='utf-8')
+    geojson_path = 'Datasets/kenya_vector_boundaries1.geojson'
     with open(geojson_path, 'r', encoding='utf-8') as f:
         geojson_data = json.load(f)
 
