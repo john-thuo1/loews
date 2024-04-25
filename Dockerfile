@@ -13,7 +13,7 @@ COPY requirements.txt requirements.txt
 # Installing Python dependencies specified in requirements.txt
 RUN pip3 install -r requirements.txt   
 
-# Copy all files and directories from the host to the container's working directory
+# Copy all files and directories from the host directory(.) to the container's working directory(.)
 COPY . .   
 
 # Copy datasets into the container( only necessary if large files to avoid multiple reruns with every update)
