@@ -41,7 +41,7 @@ The Chatbot Functionality is implemented using Retrieval Augmented Generation (R
 
 
 ## Future Steps
-1. Automating Data Processing Steps using tools such as Airflow.
-2. Implementing Realtime Predictions on the App with models running on AWS. Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and only mapped out in the Application for Visualization Purposes. 
+1. Set Up an Automated ETL Data Process preferably using Airflow. 
+2. Implementing Realtime Predictions on the App with models running on AWS. Processing & Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and the Predicted Outputs mapped out in the Application for Visualization Purposes. 
 3. Incorporate Multilanguage Support.
-4. Implementing a better method of Referencing Chat Outputs for RAG. Currently , I have only included the PDF Source as my references. However, the References should refer to the exact text chunks extracted and the associated citations.
+4. Implement an efficient method of Referencing Chat Outputs for RAG. Currently , I have only included the PDF Source as my references. However, the References should refer to the exact text chunks extracted and the associated citations.
