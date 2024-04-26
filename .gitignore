@@ -1,8 +1,6 @@
 coreapp/__pycache__
 loews/__pycache__
 coreapp/migrations
-users/migrations
-users/__pycache__
 db.sqlite3
 media
 .env
