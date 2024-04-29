@@ -10,9 +10,16 @@ services:
     environment:
       - DATABASE_ENGINE=django.db.backends.sqlite3
       - DATABASE_NAME=/loews/db.sqlite3
+      - SECRET_KEY=${SECRET_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEBUG=${DEBUG}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_EMAIL=${DB_EMAIL}
+      - DB_PASSWORD=${DB_PASSWORD}
+
     command: >
       sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py shell -c 'from django.contrib.auth.models import User; \
-      User.objects.filter(username=\"admin\").exists() or User.objects.create_superuser(\"admin\", \"admin@example.com\", \"avatar1234!\")' && \
+      User.objects.filter(username=\"$DB_USERNAME\").exists() or User.objects.create_superuser(\"$DB_USERNAME\", \"$DB_EMAIL\", \"$DB_PASSWORD\")' && \
       python manage.py runserver 0.0.0.0:3000"
     container_name: project_loews
 

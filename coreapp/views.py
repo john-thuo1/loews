@@ -1,14 +1,14 @@
 # Standard Library Imports
 import csv
 import re
-
+import os
 
 # Third-party Library Imports
-from decouple import config
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
+from dotenv import load_dotenv
 from django.views.generic import CreateView
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
@@ -26,10 +26,13 @@ from openai import OpenAI
 from .models import Chat
 
 
-client = OpenAI(
-    api_key=config("OPENAI_API_KEY"),
-)
+load_dotenv() 
 
+user_api_key= os.getenv('OPENAI_API_KEY')
+
+client = OpenAI(
+    api_key= user_api_key
+)
 
 
 def control_mitigation(request):
@@ -67,7 +70,7 @@ def process_text(text):
                                           chunk_overlap=200, length_function=len)
     chunks = text_splitter.split_text(text)
     
-    embeddings = OpenAIEmbeddings(api_key=config("OPENAI_API_KEY"))
+    embeddings = OpenAIEmbeddings(api_key=os.getenv('OPENAI_API_KEY'))
     knowledgeBase = FAISS.from_texts(chunks, embeddings)
     return knowledgeBase
 
@@ -118,16 +121,16 @@ def rag_chat(request):
         
         response = query_chat(message, similar_documents)
 
-        citations = ["Heinrich Boll Foundation. (2023, September). HIGHLY HAZARDOUS PESTICIDES IN KENYA. Heinrich Boll Foundation. Retrieved April 11, 2024, from https://ke.boell.org/sites/default/files/2023-09/data-and-facts_highly-hazardous-pesticides-in-kenya-1.pdf",
-                    "Pest Control Products Board. (2020). Registration Review of Pest Control Products containing the following Active Ingredients: Circular-Diuron: https://bit.ly/3K4eT1n",
-                    ]
-        numbered_citations = "\n".join([f"{i+1}. {citation}" for i, citation in enumerate(citations)])
+        # citations = ["Heinrich Boll Foundation. (2023, September). HIGHLY HAZARDOUS PESTICIDES IN KENYA. Heinrich Boll Foundation. Retrieved April 11, 2024, from https://ke.boell.org/sites/default/files/2023-09/data-and-facts_highly-hazardous-pesticides-in-kenya-1.pdf",
+        #             "Pest Control Products Board. (2020). Registration Review of Pest Control Products containing the following Active Ingredients: Circular-Diuron: https://bit.ly/3K4eT1n",
+        #             ]
+        # numbered_citations = "\n".join([f"{i+1}. {citation}" for i, citation in enumerate(citations)])
 
-        combined_response = f"{response}\nReferences\n{numbered_citations}"
+        # combined_response = f"{response}\nReferences\n{numbered_citations}"
 
-        chat = Chat(user=request.user, message=message, response=combined_response, created_at=timezone.now())
+        chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
         chat.save()
-        return JsonResponse({"message": message, "response": format_response(combined_response)})
+        return JsonResponse({"message": message, "response": format_response(response)})
     return render(request, "coreapp/chat.html", {"chats": chats})
 
 
