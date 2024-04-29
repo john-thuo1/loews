@@ -55,13 +55,21 @@ def dashboard(request):
  
  
 def load_data():
-    pdf = "Datasets/pesticides.pdf"
-    if pdf is not None:
-        pdf_reader = PdfReader(pdf)
-        text = ""
-        for page in pdf_reader.pages:
-            text += page.extract_text()
-    return text  
+    pdf_path = "Datasets/pesticides.pdf"
+    if not os.path.exists(pdf_path):
+        print(f"Error: PDF file '{pdf_path}' not found.")
+        return ""
+    
+    text = ""
+    try:
+        with open(pdf_path, "rb") as file:
+            pdf_reader = PdfReader(file)
+            for page in pdf_reader.pages:
+                text += page.extract_text()
+    except Exception as e:
+        print(f"Error while reading PDF: {e}")
+    
+    return text
 
     
 
@@ -81,7 +89,7 @@ def query_chat(message, similar_documents):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a locust outbreak mitigation expert."},
+            {"role": "system", "content": "You are a locust outbreak mitigation expert. If you do not know the answer, or are unsure, say you don't know."},
             {"role": "user", "content": message},
             {"role": "system", "content": "Similar documents: \n" + "\n".join(similar_documents)}
        
@@ -120,14 +128,6 @@ def rag_chat(request):
         similar_documents = knowledge_base.similarity_search(message)
         
         response = query_chat(message, similar_documents)
-
-        # citations = ["Heinrich Boll Foundation. (2023, September). HIGHLY HAZARDOUS PESTICIDES IN KENYA. Heinrich Boll Foundation. Retrieved April 11, 2024, from https://ke.boell.org/sites/default/files/2023-09/data-and-facts_highly-hazardous-pesticides-in-kenya-1.pdf",
-        #             "Pest Control Products Board. (2020). Registration Review of Pest Control Products containing the following Active Ingredients: Circular-Diuron: https://bit.ly/3K4eT1n",
-        #             ]
-        # numbered_citations = "\n".join([f"{i+1}. {citation}" for i, citation in enumerate(citations)])
-
-        # combined_response = f"{response}\nReferences\n{numbered_citations}"
-
         chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
         chat.save()
         return JsonResponse({"message": message, "response": format_response(response)})
