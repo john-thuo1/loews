@@ -16,12 +16,11 @@ EXPOSE 3000
 # Copy datasets into the container( only necessary if large files to avoid multiple reruns with every update)
 COPY Datasets /loews/Datasets
 
-RUN python manage.py makemigrations
-RUN python manage.py migrate
 
-RUN echo "from django.contrib.auth.models import User; \
-          User.objects.filter(username='admin').exists() or \
-          User.objects.create_superuser('admin', 'admin@example.com', 'avatar1234!')" \
-          | python manage.py shell
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:3000"]
+CMD ["sh", "-c", "python manage.py makemigrations && \
+                  python manage.py migrate && \
+                  echo \"from django.contrib.auth.models import User; \
+                  User.objects.filter(username='$DB_USERNAME').exists() or \
+                  User.objects.create_superuser('$DB_USERNAME', '$DB_EMAIL', '$DB_PASSWORD')\" \
+                  | python manage.py shell && \
+                  python manage.py runserver 0.0.0.0:3000"]
