@@ -14,6 +14,8 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from pypdf import PdfReader
+from typing import Any
+from logger import setup_logger
 
 
 
@@ -34,30 +36,39 @@ client = OpenAI(
     api_key= user_api_key
 )
 
+logger = setup_logger(__name__, 'views.log')
+
+
 
 def control_mitigation(request):
+    logger.info("Rendering control_mitigation page")
     return render(request, "coreapp/mitigation.html")
 
 
 def self_report(request):
+    logger.info("Rendering self_report page")
     return render(request, "coreapp/self_report.html")
 
 
 def dashboard(request):
-    trends_html = plot_trend()
-    table_html = plot_regions()[0]
-    season_html = plot_seasonality()
-    vegetation_html = plot_vegetation()
-    context = {'trends_html': trends_html, 'table_html': table_html, 
-               'season_html': season_html, 'vegetation_html': vegetation_html}
-    
+    logger.info("Rendering dashboard")
+    try:
+        trends_html = plot_trend()
+        table_html = plot_regions()[0]
+        season_html = plot_seasonality()
+        vegetation_html = plot_vegetation()
+        context = {'trends_html': trends_html, 'table_html': table_html, 
+                   'season_html': season_html, 'vegetation_html': vegetation_html}
+        logger.info("Dashboard context prepared successfully")
+    except Exception as e:
+        logger.error(f"Error in dashboard: {e}")
     return render(request, "coreapp/dashboard.html", context)
- 
- 
+
+
 def load_data():
     pdf_path = "Datasets/pesticides.pdf"
     if not os.path.exists(pdf_path):
-        print(f"Error: PDF file '{pdf_path}' not found.")
+        logger.error(f"PDF file '{pdf_path}' not found.")
         return ""
     
     text = ""
@@ -66,90 +77,103 @@ def load_data():
             pdf_reader = PdfReader(file)
             for page in pdf_reader.pages:
                 text += page.extract_text()
+        logger.info("PDF data loaded successfully")
     except Exception as e:
-        print(f"Error while reading PDF: {e}")
+        logger.error(f"Error while reading PDF: {e}")
     
     return text
 
-    
 
-def process_text(text):
-    text_splitter = CharacterTextSplitter(separator="\n", keep_separator=True, chunk_size=1000, 
-                                          chunk_overlap=200, length_function=len)
-    chunks = text_splitter.split_text(text)
-    
-    embeddings = OpenAIEmbeddings(api_key=os.getenv('OPENAI_API_KEY'))
-    knowledgeBase = FAISS.from_texts(chunks, embeddings)
-    return knowledgeBase
-
-
-def query_chat(message, similar_documents):
-    similar_documents = [str(doc_id) for doc_id in similar_documents]
-
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a locust outbreak mitigation expert. If you do not know the answer, or are unsure, say you don't know."},
-            {"role": "user", "content": message},
-            {"role": "system", "content": "Similar documents: \n" + "\n".join(similar_documents)}
-       
-        ]
-    )
-    answer = response.choices[0].message.content.strip()
-    return answer
+def process_text(text: str) -> FAISS:
+    try:
+        text_splitter = CharacterTextSplitter(separator="\n", keep_separator=True, chunk_size=1000, 
+                                              chunk_overlap=200, length_function=len)
+        chunks = text_splitter.split_text(text)
+        
+        embeddings = OpenAIEmbeddings(api_key=os.getenv('OPENAI_API_KEY'))
+        knowledgeBase = FAISS.from_texts(chunks, embeddings)
+        logger.info("Text processed successfully")
+        return knowledgeBase
+    except Exception as e:
+        logger.error(f"Error in process_text: {e}")
 
 
-# Format response prior to saving to db
+def query_chat(message: str, similar_documents: str| Any) -> str| None:
+    try:
+        similar_documents = [str(doc_id) for doc_id in similar_documents]
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a locust outbreak mitigation expert. If you do not know the answer, or are unsure, say you don't know."},
+                {"role": "user", "content": message},
+                {"role": "system", "content": "Similar documents: \n" + "\n".join(similar_documents)}
+            ]
+        )
+        answer = response.choices[0].message.content.strip()
+        logger.info("Query chat completed successfully")
+        return answer
+    except Exception as e:
+        logger.error(f"Error in query_chat: {e}")
+
+
 def format_response(response):
-    lines = response.split('\n')
-    formatted_lines = []
-    for line in lines:
-        if line.strip():
-            is_numbered = re.match(r'^\s*\d+\.\s+', line)
-            is_bulleted = re.match(r'^\s*-\s+', line)
+    try:
+        lines = response.split('\n')
+        formatted_lines = []
+        for line in lines:
+            if line.strip():
+                is_numbered = re.match(r'^\s*\d+\.\s+', line)
+                is_bulleted = re.match(r'^\s*-\s+', line)
 
-            if is_numbered:
-                formatted_lines.append(f'<p>{line.strip()}</p>')
-            elif is_bulleted:
-                formatted_lines.append(f'<p>{line.strip()}</p>')
-            else:
-                formatted_lines.append(f'<p>{line.strip()}</p>')
-    return ''.join(formatted_lines)
-
-
-def rag_chat(request): 
-    chats = Chat.objects.filter(user=request.user)
-    if request.method == "POST":
-        # User Query
-        message = request.POST.get("message")
+                if is_numbered:
+                    formatted_lines.append(f'<p>{line.strip()}</p>')
+                elif is_bulleted:
+                    formatted_lines.append(f'<p>{line.strip()}</p>')
+                else:
+                    formatted_lines.append(f'<p>{line.strip()}</p>')
+        logger.info("Response formatted successfully")
+        return ''.join(formatted_lines)
+    except Exception as e:
+        logger.error(f"Error in format_response: {e}")
         
-        document_text = load_data()
-        knowledge_base = process_text(document_text)
-        similar_documents = knowledge_base.similarity_search(message)
-        
-        response = query_chat(message, similar_documents)
-        chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
-        chat.save()
-        return JsonResponse({"message": message, "response": format_response(response)})
-    return render(request, "coreapp/chat.html", {"chats": chats})
 
 
-# Modify function implementation
+def rag_chat(request):
+    try:
+        chats = Chat.objects.filter(user=request.user)
+        if request.method == "POST":
+            message = request.POST.get("message")
+            document_text = load_data()
+            knowledge_base = process_text(document_text)
+            similar_documents = knowledge_base.similarity_search(message)
+            response = query_chat(message, similar_documents)
+            chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
+            chat.save()
+            logger.info("RAG chat processed and saved successfully")
+            return JsonResponse({"message": message, "response": format_response(response)})
+        return render(request, "coreapp/chat.html", {"chats": chats})
+    except Exception as e:
+        logger.error(f"Error in rag_chat: {e}")
+
+
 def download_data(request):
-    reports_data = Report.objects.all().values()
-    columns_to_drop = ['name', 'phone_number']
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="locusts_data.csv"'
-    csv_writer = csv.writer(response)
-    header_row = [field for field in reports_data[0] if field not in columns_to_drop]
-    csv_writer.writerow(header_row)
+    try:
+        reports_data = Report.objects.all().values()
+        columns_to_drop = ['name', 'phone_number']
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="locusts_data.csv"'
+        csv_writer = csv.writer(response)
+        header_row = [field for field in reports_data[0] if field not in columns_to_drop]
+        csv_writer.writerow(header_row)
 
-    # Write the data rows excluding specified columns
-    for report in reports_data:
-        cleaned_report = [report[field] for field in header_row]
-        csv_writer.writerow(cleaned_report)
-    return response
-
+        for report in reports_data:
+            cleaned_report = [report[field] for field in header_row]
+            csv_writer.writerow(cleaned_report)
+        logger.info("Data downloaded successfully")
+        return response
+    except Exception as e:
+        logger.error(f"Error in download_data: {e}")
     
 def delete_chats(request):
     if request.method == "DELETE":
