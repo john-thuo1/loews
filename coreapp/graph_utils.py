@@ -41,7 +41,7 @@ def plot_trend():
         return trends_html
     except Exception as e:
         logger.error(f"Error in plot_trend: {e}")
-        raise
+
 
 def plot_prophet_predictions(data):
     logger.info("Generating Prophet predictions")
@@ -56,7 +56,7 @@ def plot_prophet_predictions(data):
         return forecast[['ds', 'yhat']]
     except Exception as e:
         logger.error(f"Error in plot_prophet_predictions: {e}")
-        raise
+
 
 def plot_regions():
     logger.info("Plotting regions")
@@ -106,7 +106,7 @@ def plot_regions():
         return table_html, df
     except Exception as e:
         logger.error(f"Error in plot_regions: {e}")
-        raise
+        
 
 def plot_seasonality():
     logger.info("Plotting seasonality")
@@ -137,7 +137,7 @@ def plot_seasonality():
         return season_html
     except Exception as e:
         logger.error(f"Error in plot_seasonality: {e}")
-        raise
+        
 
 def plot_vegetation():
     logger.info("Plotting vegetation")
@@ -169,7 +169,7 @@ def plot_vegetation():
         return vegetation_html
     except Exception as e:
         logger.error(f"Error in plot_vegetation: {e}")
-        raise
+        
 
 def plot_predictionmap():
     logger.info("Plotting prediction map")
@@ -207,4 +207,4 @@ def plot_predictionmap():
         return prediction_map
     except Exception as e:
         logger.error(f"Error in plot_predictionmap: {e}")
-        raise
+        

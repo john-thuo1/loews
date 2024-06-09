@@ -15,8 +15,7 @@ def setup_logger(module_name: str, log_file: str, log_dir: str = 'Logs') -> logg
             logging.FileHandler(log_file_path)
         ]
     )
-
-    # Get the logger
+    
     logger = logging.getLogger(module_name)
     
     return logger

@@ -4,5 +4,7 @@ coreapp/migrations
 db.sqlite3
 media
 .env
-
+.vscode/
+modif
+coreapp/Logs/
 
