@@ -61,7 +61,7 @@ def plot_prophet_predictions(data):
 def plot_regions():
     logger.info("Plotting regions")
     try:
-        df = pd.read_csv('Datasets/data.csv')
+        df = pd.read_csv('../Datasets/data.csv')
         df['Stage'] = df['Stage'].astype(str)
         df['Category'] = pd.NA
         df.loc[df['Stage'].isin(['Hoppers/Nymph(Breeding Ground)', 'Eggs(Breeding Ground)']), 'Category'] = 'Breeding Ground'
@@ -174,8 +174,8 @@ def plot_vegetation():
 def plot_predictionmap():
     logger.info("Plotting prediction map")
     try:
-        df = pd.read_csv('Datasets/predictions.csv', encoding='utf-8')
-        geojson_path = 'Datasets/kenya_vector_boundaries1.geojson'
+        df = pd.read_csv('../Datasets/predictions.csv', encoding='utf-8')
+        geojson_path = '../Datasets/kenya_vector_boundaries1.geojson'
         with open(geojson_path, 'r', encoding='utf-8') as f:
             geojson_data = json.load(f)
         

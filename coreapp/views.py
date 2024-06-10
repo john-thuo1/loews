@@ -66,7 +66,7 @@ def dashboard(request):
 
 
 def load_data():
-    pdf_path = "Datasets/pesticides.pdf"
+    pdf_path = "../Datasets/pesticides.pdf"
     if not os.path.exists(pdf_path):
         logger.error(f"PDF file '{pdf_path}' not found.")
         return ""
@@ -174,6 +174,7 @@ def download_data(request):
         return response
     except Exception as e:
         logger.error(f"Error in download_data: {e}")
+    
     
 def delete_chats(request):
     if request.method == "DELETE":
