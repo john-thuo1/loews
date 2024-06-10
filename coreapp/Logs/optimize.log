@@ -1,6 +1,40 @@
-2024-06-10 12:19:04,833 - __main__ - INFO - Starting model optimization...
-2024-06-10 12:19:06,570 - alembic.runtime.migration - INFO - Context impl SQLiteImpl.
-2024-06-10 12:19:06,570 - alembic.runtime.migration - INFO - Will assume non-transactional DDL.
-2024-06-10 12:19:06,638 - __main__ - INFO - Registering best model...
-2024-06-10 12:19:06,843 - __main__ - INFO - Registered model runs:/b2ba33d3dea34233bd0bff22d8d2eafc/model as 'Best GeoSpatial Classifier Model'
-2024-06-10 12:19:06,911 - __main__ - INFO - Optimization completed successfully.
+2024-06-10 17:31:32,217 - __main__ - INFO - Starting model optimization...
+2024-06-10 17:31:32,709 - alembic.runtime.migration - INFO - Context impl SQLiteImpl.
+2024-06-10 17:31:32,709 - alembic.runtime.migration - INFO - Will assume non-transactional DDL.
+2024-06-10 17:31:32,787 - git.cmd - DEBUG - Popen(['git', 'version'], cwd=C:\Users\johnt\Desktop\Modify\loews\coreapp, stdin=None, shell=False, universal_newlines=False)
+2024-06-10 17:31:32,833 - git.cmd - DEBUG - Popen(['git', 'version'], cwd=C:\Users\johnt\Desktop\Modify\loews\coreapp, stdin=None, shell=False, universal_newlines=False)
+2024-06-10 17:31:32,872 - git.cmd - DEBUG - Popen(['git', 'check-ignore', 'C:\\Users\\johnt\\Desktop\\Modify\\loews\\coreapp'], cwd=C:\Users\johnt\Desktop\Modify\loews, stdin=None, shell=False, universal_newlines=False)
+2024-06-10 17:31:32,929 - git.cmd - DEBUG - Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\johnt\Desktop\Modify\loews, stdin=<valid stream>, shell=False, universal_newlines=False)
+2024-06-10 17:31:33,048 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002530 seconds
+2024-06-10 17:31:33,048 - hyperopt.tpe - INFO - TPE using 0 trials
+2024-06-10 17:31:33,108 - hyperopt.fmin - ERROR - job exception: cannot set WRITEABLE flag to True of this array
+2024-06-10 17:36:01,475 - __main__ - INFO - Starting model optimization...
+2024-06-10 17:36:01,955 - alembic.runtime.migration - INFO - Context impl SQLiteImpl.
+2024-06-10 17:36:01,955 - alembic.runtime.migration - INFO - Will assume non-transactional DDL.
+2024-06-10 17:36:02,020 - git.cmd - DEBUG - Popen(['git', 'version'], cwd=C:\Users\johnt\Desktop\Modify\loews\coreapp, stdin=None, shell=False, universal_newlines=False)
+2024-06-10 17:36:02,055 - git.cmd - DEBUG - Popen(['git', 'version'], cwd=C:\Users\johnt\Desktop\Modify\loews\coreapp, stdin=None, shell=False, universal_newlines=False)
+2024-06-10 17:36:02,086 - git.cmd - DEBUG - Popen(['git', 'check-ignore', 'C:\\Users\\johnt\\Desktop\\Modify\\loews\\coreapp'], cwd=C:\Users\johnt\Desktop\Modify\loews, stdin=None, shell=False, universal_newlines=False)
+2024-06-10 17:36:02,125 - git.cmd - DEBUG - Popen(['git', 'cat-file', '--batch-check'], cwd=C:\Users\johnt\Desktop\Modify\loews, stdin=<valid stream>, shell=False, universal_newlines=False)
+2024-06-10 17:36:02,195 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.000000 seconds
+2024-06-10 17:36:02,195 - hyperopt.tpe - INFO - TPE using 0 trials
+2024-06-10 17:36:09,149 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002006 seconds
+2024-06-10 17:36:09,149 - hyperopt.tpe - INFO - TPE using 1/1 trials with best loss -0.990099
+2024-06-10 17:36:13,800 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002957 seconds
+2024-06-10 17:36:13,801 - hyperopt.tpe - INFO - TPE using 2/2 trials with best loss -0.990099
+2024-06-10 17:36:17,173 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002005 seconds
+2024-06-10 17:36:17,173 - hyperopt.tpe - INFO - TPE using 3/3 trials with best loss -0.990099
+2024-06-10 17:36:20,747 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002015 seconds
+2024-06-10 17:36:20,747 - hyperopt.tpe - INFO - TPE using 4/4 trials with best loss -0.990099
+2024-06-10 17:36:25,209 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002503 seconds
+2024-06-10 17:36:25,209 - hyperopt.tpe - INFO - TPE using 5/5 trials with best loss -0.990099
+2024-06-10 17:36:31,021 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.000998 seconds
+2024-06-10 17:36:31,021 - hyperopt.tpe - INFO - TPE using 6/6 trials with best loss -0.990099
+2024-06-10 17:36:36,623 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002015 seconds
+2024-06-10 17:36:36,623 - hyperopt.tpe - INFO - TPE using 7/7 trials with best loss -0.990099
+2024-06-10 17:36:39,771 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002992 seconds
+2024-06-10 17:36:39,771 - hyperopt.tpe - INFO - TPE using 8/8 trials with best loss -0.991089
+2024-06-10 17:36:46,673 - hyperopt.tpe - INFO - build_posterior_wrapper took 0.002007 seconds
+2024-06-10 17:36:46,673 - hyperopt.tpe - INFO - TPE using 9/9 trials with best loss -0.991089
+2024-06-10 17:36:50,994 - __main__ - INFO - Registering best model...
+2024-06-10 17:36:51,066 - __main__ - INFO - Registered model runs:/c4aa91a98b074b14831cab9ed7234984/model as 'Best GeoSpatial Classifier Model'
+2024-06-10 17:36:51,246 - __main__ - INFO - Optimization completed successfully.

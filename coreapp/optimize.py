@@ -1,5 +1,4 @@
 import os
-from typing import Type
 import numpy as np
 import pickle
 import click
@@ -7,30 +6,29 @@ import mlflow
 from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
 from hyperopt.pyll import scope
 from sklearn.metrics import accuracy_score
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from mlflow.tracking import MlflowClient
 from mlflow.entities import ViewType
-from logger import setup_logger
 from dotenv import load_dotenv
 import joblib
 import warnings
+import typing as tp
 
+from logger import setup_logger  
 
 warnings.filterwarnings("ignore")
 
-# Setup logger for this module
+
 logger = setup_logger(__name__, 'optimize.log')
 load_dotenv()
 
 
 MODEL_CLASS_MAP = {
     'RandomForest': RandomForestClassifier,
-    'LogisticRegression': LogisticRegression
 }
 
 
-def load_pickle(filename: str) -> any:
+def load_pickle(filename: str) -> tp.Any:
     with open(filename, "rb") as f_in:
         return pickle.load(f_in)
 
@@ -53,38 +51,6 @@ def register_best_model(client: MlflowClient, top_n: int) -> str:
     return best_model_uri
 
 
-def optimize_model(model_name: str, model_class: Type, search_space: dict, X_train, y_train, X_test, y_test, num_trials: int) -> None:
- def objective(params):
-    model = model_class(**params)
-    
-    with mlflow.start_run(run_name=f'{model_name} Optimization', nested=True):
-        mlflow.log_params(params)
-        try:
-            # Make a copy of input arrays to avoid modifying them
-            X_train_copy = X_train.copy()
-            y_train_copy = y_train.copy()
-            model.fit(X_train_copy, y_train_copy)
-        except Exception as e:
-            logger.error(f"Error occurred during model fitting: {e}")
-            raise e
-        y_pred = model.predict(X_test)
-        acc_optimized = accuracy_score(y_test, y_pred)
-        mlflow.log_metric("Accuracy", acc_optimized)
-        mlflow.sklearn.log_model(model, "model")
-
-        return {'Accuracy': acc_optimized, 'status': STATUS_OK}
-
-
-    with mlflow.start_run(run_name=f"GeoSpatial Models Optimization - {model_name}"):
-        fmin(
-            fn=objective,
-            space=search_space,
-            algo=tpe.suggest,
-            max_evals=num_trials,
-            trials=Trials(),
-            rstate=np.random.default_rng(42)
-        )
-        
 @click.command()
 @click.option(
     "--data_path",
@@ -111,54 +77,54 @@ def main(data_path: str, num_trials: int, top_n: int) -> None:
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
     X_test, y_test = load_pickle(os.path.join(data_path, "test.pkl"))
 
+    X_train_copy = X_train.copy(deep=True)
+    y_train_copy = y_train.copy(deep=True)
+    X_test_copy = X_test.copy(deep=True)
+    y_test_copy = y_test.copy(deep=True)
 
-    model_optimizations = [
-        {
-            'model_name': 'RandomForest',
-            'model_class': RandomForestClassifier,
-            'search_space': {
-                'n_estimators': scope.int(hp.quniform('n_estimators', 10, 1000, 1)),
-                'max_depth': scope.int(hp.quniform('max_depth', 1, 20, 1)),
-                'min_samples_split': scope.int(hp.quniform('min_samples_split', 2, 10, 1)),
-                'min_samples_leaf': scope.int(hp.quniform('min_samples_leaf', 1, 10, 1)),
-                'max_features': hp.choice('max_features', ['auto', 'sqrt', 'log2', None]),
-                'random_state': 42
-            }
-        },
-        {
-            'model_name': 'LogisticRegression',
-            'model_class': LogisticRegression,
-            'search_space': {
-                'C': hp.loguniform('C', np.log(0.001), np.log(1000)),
-                'solver': hp.choice('solver', ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga']),
-                'max_iter': scope.int(hp.quniform('max_iter', 100, 1000, 1)),
-                'random_state': 42
-            }
-        }
-    ]
+    def objective(params):
+        model = RandomForestClassifier(**params)
+        
+        with mlflow.start_run(run_name='RandomForest Optimization', nested=True):
+            mlflow.log_params(params)
 
-    for model_opt in model_optimizations:
-        optimize_model(
-            model_name=model_opt['model_name'],
-            model_class=model_opt['model_class'],
-            search_space=model_opt['search_space'],
-            X_train=X_train,
-            y_train=y_train,
-            X_test=X_test,
-            y_test=y_test,
-            num_trials=num_trials
+            model.fit(X_train_copy, y_train_copy)
+            y_pred = model.predict(X_test_copy)
+            rf_optimized = accuracy_score(y_test_copy, y_pred)
+            mlflow.log_metric("Accuracy", rf_optimized)
+            mlflow.sklearn.log_model(model, "model")
+
+            # Negate the Accuracy Score to work as the Loss as hyperopt only takes that.
+            return {'loss': -rf_optimized, 'status': STATUS_OK}
+
+    search_space = {
+        'n_estimators': scope.int(hp.quniform('n_estimators', 10, 1000, 1)),
+        'max_depth': scope.int(hp.quniform('max_depth', 1, 20, 1)),
+        'min_samples_split': scope.int(hp.quniform('min_samples_split', 2, 10, 1)),
+        'min_samples_leaf': scope.int(hp.quniform('min_samples_leaf', 1, 10, 1)),
+        'max_features': hp.choice('max_features', ['sqrt', 'log2', None]),
+        'random_state': 42     
+    }
+
+    with mlflow.start_run(run_name="Classifier Optimization"):
+        fmin(
+            fn=objective,
+            space=search_space,
+            algo=tpe.suggest,
+            max_evals=num_trials,
+            trials=Trials(),
+            rstate=np.random.default_rng(42)
         )
 
-    # Register the best model and retrieve its URI
-    best_model_uri = register_best_model(client, top_n)
-    best_model = mlflow.sklearn.load_model(best_model_uri)
+        # Register the best model from Random Forest and retrieve its URI
+        best_model_uri = register_best_model(client, top_n)
+        best_model = mlflow.sklearn.load_model(best_model_uri)
 
-    # Save the best model locally
-    joblib.dump(best_model, os.path.join(data_path, "best_model.joblib"))    
-    logger.info("Optimization completed successfully.")
+        # Save the best model locally
+        joblib.dump(best_model, os.path.join(data_path, "best_model.joblib"))
+        logger.info("Optimization completed successfully.")
 
 if __name__ == "__main__":
     main()
 
-
-# CMD -> 
+# CMD -> python optimize.py --data_path ../Data --num_trials 10 --top_n 5
