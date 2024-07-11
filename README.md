@@ -1,11 +1,11 @@
 # Project Description
-Loews aims to develop a locust early warning system leveraging Geospatial Data to map locust breeding grounds for early intervention. It provides up-to-date information and analysis on locust outbreaks and mitigation measures in Kenya to stakeholders such as farmers, the government, and other agencies. 
+Loews is a locust early warning system leveraging Geospatial Data to map locust breeding grounds for early intervention. It provides up-to-date information and analysis on locust outbreaks and mitigation measures in Kenya to stakeholders such as farmers, the government, and other agencies. 
 
-To identify breeding grounds, Loews utilizes a Random Forest Model trained on 5000 Geospatial Data Points with main features including Rainfall, Temperature, and Soil Type. The mapping of breeding grounds is visualized using the Folium Library, with markers indicating possible breeding grounds and land sizes. 
+Loews utilizes a Random Forest Model trained on 5000 Geospatial Data Points to identify breeding grounds with main features including Rainfall, Temperature, and Soil Type. The mapping of breeding grounds is visualized using the Folium Library, with markers indicating possible breeding grounds and land sizes. 
 
 Additionally, visualizations on the Analytics Page utilize Synthetic Data generated using the Faker Library, simulating data that will be collected from farmers on locust sightings in Kenya. 
 
-The Chatbot Functionality is implemented using Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.Future plan is to have this provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as Ministry of Agriculture e.t.c to counter `gpt3.5-turbo` Hallucinations & lack of updated information.
+The Chatbot Functionality is implemented using the Retrieval Augmented Generation (R.A.G) Technique, utilizing tools such as FAISS for vector store simulation, OpenAI Embeddings, and Langchain Library. This chatbot provides updated information on Highly Hazardous Pesticides (HHP) currently in use in Kenya.  The future plan is to have this provide updated information on Locust Outbreaks, Strategies/Measures from Credible Sources such as the Ministry of Agriculture, etc., to counter `gpt3.5-turbo` Hallucinations and lack of updated information.
 
 ## Local Project Set Up
 #### To set up Loews locally without Docker:
@@ -39,9 +39,13 @@ The Chatbot Functionality is implemented using Retrieval Augmented Generation (R
 - ![Analytics Page](https://github.com/john-thuo1/loews/assets/108690517/e7c4a91f-ae5d-4165-a6c9-3eeb3ea5a255)
 - ![Chatbot Page](https://github.com/john-thuo1/loews/assets/108690517/eaecb147-dee4-4efc-9563-4897a64c054b)
 
+### Model Training & Optimization using mlflow
+You can use the parameters registered to train your RandomForest Model to obtain a similar model.
+![model tracking & registration](https://github.com/john-thuo1/ai_loews/assets/108690517/564ed5f1-697d-4ca2-9b0e-a41310de4c60)
+![model registered](https://github.com/john-thuo1/ai_loews/assets/108690517/37c86f28-4218-4c34-a862-d2c8995d17ac)
 
 ## Future Steps
-1. Set Up an Automated ETL Data Process preferably using Airflow. 
-2. Implementing Realtime Predictions on the App with models running on AWS. Processing & Predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ZmHPuyaNubCCN9yNE9ofV-_Z3FJKc0WQ?usp=sharing) and the Predicted Outputs mapped out in the Application for Visualization Purposes. 
+1. Set Up an Automated ETL Data Process, preferably using Airflow. 
+2. Implement Real-time Predictions on the App with models running on AWS. Processing and predictions have been made in the [Collab File](https://colab.research.google.com/drive/1ieuJfoAEtqtNDgAZYtEwhOOobt2EbDLc?usp=sharing), and the Predicted Outputs are mapped out in the Application for Visualization Purposes. 
 3. Incorporate Multilanguage Support.
-4. Implement an efficient method of Referencing Chat Outputs for RAG. Currently , I have only included the PDF Source as my references. However, the References should refer to the exact text chunks extracted and the associated citations.
+4. Implement an efficient method of Referencing Chat Outputs for RAG. Currently, I have only included the PDF Source as my reference. However, the References should refer to the exact text chunks extracted and the associated citations.
